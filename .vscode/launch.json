@@ -5,21 +5,16 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Flutter-Responsive-Admin-Panel-or-Dashboard",
-            "request": "launch",
-            "type": "dart"
-        },
-        {
-            "name": "Flutter-Responsive-Admin-Panel-or-Dashboard (profile mode)",
-            "request": "launch",
+            "name": "Flutter (port 8081)",
             "type": "dart",
-            "flutterMode": "profile"
-        },
-        {
-            "name": "Flutter-Responsive-Admin-Panel-or-Dashboard (release mode)",
             "request": "launch",
-            "type": "dart",
-            "flutterMode": "release"
+            "program": "lib/main.dart",
+            "args": [
+                "--web-renderer",
+                "auto",
+                "--web-port",
+                "8081"
+            ],
         }
     ]
 }

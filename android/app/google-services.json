@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "912098271290",
+    "project_id": "freedom-lens",
+    "storage_bucket": "freedom-lens.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:912098271290:android:7925350197a11da56d9503",
+        "android_client_info": {
+          "package_name": "com.example.admin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsOv2OUDW6ENOoTzvblz8piCCZ5H36jjk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
