@@ -14,9 +14,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      builder: (context, child) {
-        return MainScreen();
-      },
+      home: MainScreen(),
       title: "FreedomLens",
       theme: appTheme(),
       darkTheme: appTheme(),
