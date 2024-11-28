@@ -14,7 +14,7 @@ class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: JsonTableRequest(),
+      child: DataTableExample(),
       // child: SingleChildScrollView(
       //   primary: false,
       //   padding: EdgeInsets.all(defaultPadding),
