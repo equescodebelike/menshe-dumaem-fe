@@ -1,30 +1,26 @@
-import 'package:admin/constants.dart';
-import 'package:admin/res/app_theme.dart';
-import 'package:admin/screens/dashboard/controllers/menu_app_controller.dart';
-import 'package:admin/screens/main/main_screen.dart';
+import 'dart:async';
+import 'package:admin/di/app_dependency.dart';
+import 'package:admin/firebase_options.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter/services.dart';
 
-void main() {
-  runApp(MyApp());
-}
+import 'di/app.dart';
+import 'di/app_components.dart';
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Admin Panel',
-      theme: appTheme(),
-      home: MultiProvider(
-        providers: [
-          ChangeNotifierProvider(
-            create: (context) => MenuAppController(),
-          ),
-        ],
-        child: MainScreen(),
-      ),
-    );
-  }
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+  analytics.logEvent(name: 'app_launch');
+  await AppComponents().init();
+
+  runApp(
+    AppDependency(
+      app: App(),
+    ),
+  );
 }
