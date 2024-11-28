@@ -13,7 +13,7 @@ class SideMenu extends StatelessWidget {
         children: [
           DrawerHeader(
             child:
-                Align(alignment: Alignment.center, child: Text('Админ-панель')),
+                Align(alignment: Alignment.center, child: Text('FreedomLense')),
           ),
           DrawerListTile(
             title: "Главная",
