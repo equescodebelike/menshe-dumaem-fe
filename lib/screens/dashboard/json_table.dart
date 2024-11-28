@@ -1,8 +1,11 @@
 import 'package:admin/data/models/address_dto.dart';
 import 'package:admin/data/models/client_dto.dart';
 import 'package:admin/data/models/client_list_dto.dart';
+import 'package:admin/screens/dashboard/controllers/menu_app_controller.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class ClientDataSource extends DataTableSource {
   final ClientListDto clients;
@@ -171,15 +174,49 @@ class DataTableExample extends StatelessWidget {
       actions: [
         Row(
           children: [
-            OutlinedButton(onPressed: () {}, child: Text('Фильтрация')),
+            OutlinedButton(onPressed: () {}, child: Text('Фильтры')),
             SizedBox(
               width: 5,
             ),
-            OutlinedButton(onPressed: () {}, child: Text('Сортировка'))
+            OutlinedButton(
+              onPressed: () {},
+              child: SvgPicture.asset(
+                'assets/images/arrows.svg',
+                color: Colors.white,
+              ),
+            )
           ],
         )
       ],
-      header: MediaQuery.of(context).size.width > 400 ? const Text('Client List') : SizedBox.shrink(),
+      header: MediaQuery.of(context).size.width < 1100
+          ? Row(
+              children: [
+                SvgPicture.asset(
+                  'assets/images/logout.svg',
+                  
+                ),
+                SizedBox(
+                  width: 19,
+                ),
+                GestureDetector(
+                  onTap: context.read<MenuAppController>().controlMenu,
+                  child: Icon(
+                    Icons.menu,
+                  ),
+                ),
+              ],
+            )
+          : Row(
+              children: [
+                SvgPicture.asset(
+                  'assets/images/logout.svg',
+                  
+                ),
+                SizedBox(
+                  width: 19,
+                ),
+              ],
+            ),
       rowsPerPage: 9,
       columns: const [
         DataColumn(label: Text('ID')),
