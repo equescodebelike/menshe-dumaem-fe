@@ -25,6 +25,8 @@ mixin _$ClientDto {
   String? get externalId => throw _privateConstructorUsedError;
   int? get ageMin => throw _privateConstructorUsedError;
   int? get ageMax => throw _privateConstructorUsedError;
+  String? get preferredCategory => throw _privateConstructorUsedError;
+  String? get color => throw _privateConstructorUsedError;
   AddressDto? get address => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -44,6 +46,8 @@ abstract class $ClientDtoCopyWith<$Res> {
       String? externalId,
       int? ageMin,
       int? ageMax,
+      String? preferredCategory,
+      String? color,
       AddressDto? address});
 
   $AddressDtoCopyWith<$Res>? get address;
@@ -67,6 +71,8 @@ class _$ClientDtoCopyWithImpl<$Res, $Val extends ClientDto>
     Object? externalId = freezed,
     Object? ageMin = freezed,
     Object? ageMax = freezed,
+    Object? preferredCategory = freezed,
+    Object? color = freezed,
     Object? address = freezed,
   }) {
     return _then(_value.copyWith(
@@ -90,6 +96,14 @@ class _$ClientDtoCopyWithImpl<$Res, $Val extends ClientDto>
           ? _value.ageMax
           : ageMax // ignore: cast_nullable_to_non_nullable
               as int?,
+      preferredCategory: freezed == preferredCategory
+          ? _value.preferredCategory
+          : preferredCategory // ignore: cast_nullable_to_non_nullable
+              as String?,
+      color: freezed == color
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as String?,
       address: freezed == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
@@ -124,6 +138,8 @@ abstract class _$$ClientDtoImplCopyWith<$Res>
       String? externalId,
       int? ageMin,
       int? ageMax,
+      String? preferredCategory,
+      String? color,
       AddressDto? address});
 
   @override
@@ -146,6 +162,8 @@ class __$$ClientDtoImplCopyWithImpl<$Res>
     Object? externalId = freezed,
     Object? ageMin = freezed,
     Object? ageMax = freezed,
+    Object? preferredCategory = freezed,
+    Object? color = freezed,
     Object? address = freezed,
   }) {
     return _then(_$ClientDtoImpl(
@@ -169,6 +187,14 @@ class __$$ClientDtoImplCopyWithImpl<$Res>
           ? _value.ageMax
           : ageMax // ignore: cast_nullable_to_non_nullable
               as int?,
+      preferredCategory: freezed == preferredCategory
+          ? _value.preferredCategory
+          : preferredCategory // ignore: cast_nullable_to_non_nullable
+              as String?,
+      color: freezed == color
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as String?,
       address: freezed == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
@@ -187,6 +213,8 @@ class _$ClientDtoImpl implements _ClientDto {
       this.externalId,
       this.ageMin,
       this.ageMax,
+      this.preferredCategory,
+      this.color,
       this.address});
 
   factory _$ClientDtoImpl.fromJson(Map<String, dynamic> json) =>
@@ -203,11 +231,15 @@ class _$ClientDtoImpl implements _ClientDto {
   @override
   final int? ageMax;
   @override
+  final String? preferredCategory;
+  @override
+  final String? color;
+  @override
   final AddressDto? address;
 
   @override
   String toString() {
-    return 'ClientDto(id: $id, gender: $gender, externalId: $externalId, ageMin: $ageMin, ageMax: $ageMax, address: $address)';
+    return 'ClientDto(id: $id, gender: $gender, externalId: $externalId, ageMin: $ageMin, ageMax: $ageMax, preferredCategory: $preferredCategory, color: $color, address: $address)';
   }
 
   @override
@@ -221,13 +253,16 @@ class _$ClientDtoImpl implements _ClientDto {
                 other.externalId == externalId) &&
             (identical(other.ageMin, ageMin) || other.ageMin == ageMin) &&
             (identical(other.ageMax, ageMax) || other.ageMax == ageMax) &&
+            (identical(other.preferredCategory, preferredCategory) ||
+                other.preferredCategory == preferredCategory) &&
+            (identical(other.color, color) || other.color == color) &&
             (identical(other.address, address) || other.address == address));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, gender, externalId, ageMin, ageMax, address);
+  int get hashCode => Object.hash(runtimeType, id, gender, externalId, ageMin,
+      ageMax, preferredCategory, color, address);
 
   @JsonKey(ignore: true)
   @override
@@ -250,6 +285,8 @@ abstract class _ClientDto implements ClientDto {
       final String? externalId,
       final int? ageMin,
       final int? ageMax,
+      final String? preferredCategory,
+      final String? color,
       final AddressDto? address}) = _$ClientDtoImpl;
 
   factory _ClientDto.fromJson(Map<String, dynamic> json) =
@@ -265,6 +302,10 @@ abstract class _ClientDto implements ClientDto {
   int? get ageMin;
   @override
   int? get ageMax;
+  @override
+  String? get preferredCategory;
+  @override
+  String? get color;
   @override
   AddressDto? get address;
   @override

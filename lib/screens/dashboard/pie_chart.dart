@@ -70,6 +70,7 @@ class PieChartExample extends StatelessWidget {
                   // Диаграмма по полу
                   Text('Диаграмма разделения по полу',
                       style: Theme.of(context).textTheme.titleLarge),
+                  const SizedBox(height: 20),
                   SizedBox(
                     height: 200,
                     child: PieChart(
@@ -98,7 +99,7 @@ class PieChartExample extends StatelessWidget {
                   // Диаграмма по улицам
                   Text('Топ улиц по количеству клиентов',
                       style: Theme.of(context).textTheme.titleLarge),
-                  const SizedBox(height: 60),
+                  const SizedBox(height: 80),
                   SizedBox(
                     height: 200,
                     child: PieChart(
@@ -114,7 +115,7 @@ class PieChartExample extends StatelessWidget {
                           );
                         }).toList(),
                         sectionsSpace: 2,
-                        centerSpaceRadius: 50,
+                        centerSpaceRadius: 80,
                       ),
                     ),
                   ),

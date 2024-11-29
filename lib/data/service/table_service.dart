@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:admin/data/models/client_analytics_dto.dart';
 import 'package:admin/data/models/client_list_dto.dart';
 import 'package:admin/data/models/link_dto.dart';
 import 'package:admin/data/models/tv_shows_dto.dart';
@@ -37,4 +38,14 @@ abstract class TableService {
   // фильтры
   @POST('/analytics/most_viewed_tw_shows_file/')
   Future<LinkDto> downloadMostViewed();
+
+  @POST('/recommend/recommend_file/')
+  Future<LinkDto> downloadRecommendProfile(
+    @Query('client_id') int clientId,
+  );
+
+  @POST('/recommend/recommend/')
+  Future<ClientAnalyticsDto> getAnalyticsForClient(
+    @Query('client_id') int clientId,
+  );
 }

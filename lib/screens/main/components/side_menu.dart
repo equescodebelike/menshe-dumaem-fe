@@ -47,6 +47,11 @@ class SideMenu extends StatelessWidget {
             svgSrc: 'assets/icons/map.svg',
             press: () => onSelectScreen(3),
           ),
+          DrawerListTile(
+            title: "Получить отчет по пользователю",
+            svgSrc: 'assets/icons/menu_task.svg',
+            press: () => onSelectScreen(5),
+          ),
         ],
       ),
     );
