@@ -1,6 +1,7 @@
 import 'package:admin/data/models/address_dto.dart';
 import 'package:admin/data/models/client_dto.dart';
 import 'package:admin/data/models/client_list_dto.dart';
+import 'package:admin/di/app_components.dart';
 import 'package:admin/screens/dashboard/controllers/menu_app_controller.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
@@ -168,63 +169,130 @@ class DataTableExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dataSource = ClientDataSource(testClientList);
+    // final dataSource = ClientDataSource(testClientList);
+    final repository = AppComponents().tableRepository;
 
-    return PaginatedDataTable(
-      actions: [
-        Row(
-          children: [
-            OutlinedButton(onPressed: () {}, child: Text('Фильтры')),
-            SizedBox(
-              width: 5,
-            ),
-            OutlinedButton(
-              onPressed: () {},
-              child: SvgPicture.asset(
-                'assets/images/arrows.svg',
-                color: Colors.white,
-              ),
-            )
-          ],
-        )
-      ],
-      header: MediaQuery.of(context).size.width < 1100
-          ? Row(
-              children: [
-                SvgPicture.asset(
-                  'assets/images/logout.svg',
-                  
-                ),
-                SizedBox(
-                  width: 19,
-                ),
-                GestureDetector(
-                  onTap: context.read<MenuAppController>().controlMenu,
-                  child: Icon(
-                    Icons.menu,
-                  ),
-                ),
+    return FutureBuilder(
+        future: repository.getTable(),
+        builder: (BuildContext context, AsyncSnapshot<ClientListDto> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            final dataSourceMock = ClientDataSource(testClientList);
+            return PaginatedDataTable(
+              actions: [
+                Row(
+                  children: [
+                    OutlinedButton(onPressed: () {}, child: Text('Фильтры')),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    OutlinedButton(
+                      onPressed: () {},
+                      child: SvgPicture.asset(
+                        'assets/images/arrows.svg',
+                        color: Colors.white,
+                      ),
+                    )
+                  ],
+                )
               ],
-            )
-          : Row(
-              children: [
-                SvgPicture.asset(
-                  'assets/images/logout.svg',
-                  
-                ),
-                SizedBox(
-                  width: 19,
-                ),
+              header: MediaQuery.of(context).size.width < 1100
+                  ? Row(
+                      children: [
+                        SvgPicture.asset(
+                          'assets/images/logout.svg',
+                        ),
+                        SizedBox(
+                          width: 19,
+                        ),
+                        GestureDetector(
+                          onTap: context.read<MenuAppController>().controlMenu,
+                          child: Icon(
+                            Icons.menu,
+                          ),
+                        ),
+                      ],
+                    )
+                  : Row(
+                      children: [
+                        SvgPicture.asset(
+                          'assets/images/logout.svg',
+                        ),
+                        SizedBox(
+                          width: 19,
+                        ),
+                      ],
+                    ),
+              rowsPerPage: 9,
+              columns: const [
+                DataColumn(label: Text('ID')),
+                DataColumn(label: Text('Пол')),
+                DataColumn(label: Text('Разница в возрасте')),
+                DataColumn(label: Text('Адрес')),
               ],
-            ),
-      rowsPerPage: 9,
-      columns: const [
-        DataColumn(label: Text('ID')),
-        DataColumn(label: Text('Пол')),
-        DataColumn(label: Text('Разница в возрасте')),
-        DataColumn(label: Text('Адрес')),
-      ],
-      source: dataSource,
-    );
+              source: dataSourceMock,
+            );
+            ;
+          } else if (!snapshot.hasData) {
+            return Center(child: Text('No data available'));
+          } else {
+            final dataSource = ClientDataSource(snapshot.data!);
+            return PaginatedDataTable(
+              actions: [
+                Row(
+                  children: [
+                    OutlinedButton(onPressed: () {}, child: Text('Фильтры')),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    OutlinedButton(
+                      onPressed: () {},
+                      child: SvgPicture.asset(
+                        'assets/images/arrows.svg',
+                        color: Colors.white,
+                      ),
+                    )
+                  ],
+                )
+              ],
+              header: MediaQuery.of(context).size.width < 1100
+                  ? Row(
+                      children: [
+                        SvgPicture.asset(
+                          'assets/images/logout.svg',
+                        ),
+                        SizedBox(
+                          width: 19,
+                        ),
+                        GestureDetector(
+                          onTap: context.read<MenuAppController>().controlMenu,
+                          child: Icon(
+                            Icons.menu,
+                          ),
+                        ),
+                      ],
+                    )
+                  : Row(
+                      children: [
+                        SvgPicture.asset(
+                          'assets/images/logout.svg',
+                        ),
+                        SizedBox(
+                          width: 19,
+                        ),
+                      ],
+                    ),
+              rowsPerPage: 9,
+              columns: const [
+                DataColumn(label: Text('ID')),
+                DataColumn(label: Text('Пол')),
+                DataColumn(label: Text('Разница в возрасте')),
+                DataColumn(label: Text('Адрес')),
+              ],
+              source: dataSource,
+            );
+          }
+        });
   }
 }
