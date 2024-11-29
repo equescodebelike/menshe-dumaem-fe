@@ -3,7 +3,8 @@ import 'package:admin/responsive.dart';
 import 'package:admin/screens/dashboard/address_screen.dart';
 import 'package:admin/screens/dashboard/osm_screen.dart';
 import 'package:admin/screens/dashboard/pie_chart.dart';
-import 'package:admin/screens/dashboard/tv_show_screen.dart';
+import 'package:admin/screens/dashboard/tv_show/analytics_show.dart';
+import 'package:admin/screens/dashboard/tv_show/tv_show_screen.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
@@ -24,6 +25,7 @@ class _MainScreenState extends State<MainScreen> {
     TvShowScreen(),
     PieChartExample(),
     OsmPage(),
+    PopularShowsScreen(),
   ];
 
   void _updateScreen(int index) {

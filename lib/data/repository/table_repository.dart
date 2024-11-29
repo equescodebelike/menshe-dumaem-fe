@@ -15,7 +15,7 @@ class TableRepository {
 
   Future<ClientListDto> getTable() {
     try {
-      final result = service.getTable();
+      final result = service.getTableAddress();
       return result;
     } on DioException catch (error) {
       throw Exception(error.response?.data['message']);
@@ -42,6 +42,18 @@ class TableRepository {
     try {
       final result = service.getPopularShows();
       return result;
+    } on DioException catch (error) {
+      throw Exception(error.response?.data['message']);
+    }
+  }
+
+  Future<TvShowsDto> fetchAndProcessPopularShows() async {
+    try {
+      final popularShows = await service.getPopularShows();
+      final sortedShows = popularShows.tvShows?.take(10).toList();
+      return TvShowsDto(
+        tvShows: sortedShows,
+      );
     } on DioException catch (error) {
       throw Exception(error.response?.data['message']);
     }
