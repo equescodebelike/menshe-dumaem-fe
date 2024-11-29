@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:admin/data/models/client_list_dto.dart';
+import 'package:admin/data/models/link_dto.dart';
 import 'package:admin/data/models/tv_shows_dto.dart';
 import 'package:dio/dio.dart' hide Headers;
 import 'package:retrofit/error_logger.dart';
@@ -22,6 +23,7 @@ abstract class TableService {
   @Headers(<String, dynamic>{'Content-Type': 'text/csv'})
   Future<void> updateAddresses(@Body() FormData data);
 
+  // фильтры
   @POST('/analytics/most_viewed_tw_shows/')
   Future<TvShowsDto> getPopularShows();
 
@@ -31,4 +33,8 @@ abstract class TableService {
   @POST('/data/update_addresses/')
   @Headers({'Content-Type': 'text/csv'})
   Future<void> updateAddressesBinary(@Body() List<int> fileBytes);
+
+  // фильтры
+  @POST('/analytics/most_viewed_tw_shows_file/')
+  Future<LinkDto> downloadMostViewed();
 }

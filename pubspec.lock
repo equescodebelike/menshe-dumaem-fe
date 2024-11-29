@@ -25,14 +25,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.13.0"
-  analyzer_plugin:
-    dependency: transitive
-    description:
-      name: analyzer_plugin
-      sha256: c1d5f167683de03d5ab6c3b53fc9aeefc5d59476e7810ba7bbddff50c6f4392d
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.11.2"
   archive:
     dependency: transitive
     description:
@@ -58,7 +50,7 @@ packages:
     source: hosted
     version: "2.11.0"
   auto_route:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: auto_route
       sha256: eb33554581a0a4aa7e6da0f13a44291a55bf71359012f1d9feb41634ff908ff8
@@ -273,30 +265,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
-  elementary:
-    dependency: "direct main"
-    description:
-      name: elementary
-      sha256: "0e8e5cc6039b0e9c42d23f8e579d98f2f7a1c3e8e4fc42e45b5a5ed88b68de6a"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.2.0"
-  elementary_cli:
-    dependency: "direct main"
-    description:
-      name: elementary_cli
-      sha256: b5759dec07d2ac78d0247849d70e0ae0cc7dfc307dda73ffaf7475b044453ddf
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.0"
-  elementary_helper:
-    dependency: "direct main"
-    description:
-      name: elementary_helper
-      sha256: "85b74b5fabb9c1ebad7d59db750e271bf8865a50d38cf889698f052f93d330ed"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.2"
   equatable:
     dependency: transitive
     description:
@@ -1222,7 +1190,7 @@ packages:
     source: hosted
     version: "1.3.2"
   url_launcher:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: url_launcher
       sha256: "9d06212b1362abc2f0f0d78e6f09f726608c74e3b9462e8368bb03314aa8d603"

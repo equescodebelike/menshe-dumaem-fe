@@ -15,6 +15,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class TvShowDataSource extends DataTableSource {
   final TvShowsDto tvShows;
@@ -135,7 +136,7 @@ class TvShowTable extends StatelessWidget {
     final repository = AppComponents().tableRepository;
 
     return FutureBuilder(
-      future: repository.getPopularShows(), // Получение данных из API
+      future: repository.getPopularShows(),
       builder: (BuildContext context, AsyncSnapshot<TvShowsDto> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
@@ -157,6 +158,16 @@ class TvShowTable extends StatelessWidget {
                 // Логика фильтров
               },
               child: const Text('Фильтры'),
+            ),
+            OutlinedButton(
+              onPressed: () async {
+                final repository = AppComponents().tableRepository;
+                final result = await repository.getDownloadPopular();
+                if (result.link != null && result.link!.isNotEmpty) {
+                  await launchUrlString(result.link!);
+                }
+              },
+              child: const Text('Скачать csv'),
             ),
             // const SizedBox(width: 5),
             // OutlinedButton(

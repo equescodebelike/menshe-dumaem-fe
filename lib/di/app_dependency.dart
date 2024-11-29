@@ -21,7 +21,6 @@ class _AppDependencyState extends State<AppDependency> {
   void initState() {
     super.initState();
 
-    final errorHandler = AppComponents().errorHandler;
   }
 
   @override
