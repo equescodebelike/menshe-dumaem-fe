@@ -141,7 +141,8 @@ class __$$AddressDtoImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(fieldRename: FieldRename.snake)
 class _$AddressDtoImpl implements _AddressDto {
   const _$AddressDtoImpl(
       {this.address, this.lat, this.lon, this.flats, this.floors});

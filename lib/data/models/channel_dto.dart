@@ -7,9 +7,11 @@ part 'channel_dto.g.dart';
 
 @freezed
 class ChannelDto with _$ChannelDto {
+  @JsonSerializable(
+    fieldRename: FieldRename.snake,
+  )
   const factory ChannelDto({
     int? id,
-
   }) = _ChannelDto;
 
   factory ChannelDto.fromJson(Map<String, dynamic> json) =>

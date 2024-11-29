@@ -15,8 +15,8 @@ class ClientDataSource extends DataTableSource {
 
   @override
   DataRow? getRow(int index) {
-    if (index >= clients.list!.length) return null;
-    final client = clients.list![index];
+    if (index >= clients.clients!.length) return null;
+    final client = clients.clients![index];
 
     return DataRow(
       cells: [
@@ -29,7 +29,7 @@ class ClientDataSource extends DataTableSource {
   }
 
   @override
-  int get rowCount => clients.list!.length;
+  int get rowCount => clients.clients!.length;
 
   @override
   bool get isRowCountApproximate => false;
@@ -40,7 +40,7 @@ class ClientDataSource extends DataTableSource {
 
 // Пример данных
 final ClientListDto testClientList = ClientListDto(
-  list: [
+  clients: [
     ClientDto(
       id: 1,
       gender: true,
@@ -177,7 +177,8 @@ class DataTableExample extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot<ClientListDto> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
+          }
+          if (snapshot.hasError) {
             final dataSourceMock = ClientDataSource(testClientList);
             return PaginatedDataTable(
               actions: [
@@ -233,9 +234,63 @@ class DataTableExample extends StatelessWidget {
               ],
               source: dataSourceMock,
             );
-            ;
-          } else if (!snapshot.hasData) {
-            return Center(child: Text('No data available'));
+          }
+          if (snapshot.data == null) {
+            final dataSourceMock = ClientDataSource(testClientList);
+            return PaginatedDataTable(
+              actions: [
+                Row(
+                  children: [
+                    OutlinedButton(onPressed: () {}, child: Text('Фильтры')),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    OutlinedButton(
+                      onPressed: () {},
+                      child: SvgPicture.asset(
+                        'assets/images/arrows.svg',
+                        color: Colors.white,
+                      ),
+                    )
+                  ],
+                )
+              ],
+              header: MediaQuery.of(context).size.width < 1100
+                  ? Row(
+                      children: [
+                        SvgPicture.asset(
+                          'assets/images/logout.svg',
+                        ),
+                        SizedBox(
+                          width: 19,
+                        ),
+                        GestureDetector(
+                          onTap: context.read<MenuAppController>().controlMenu,
+                          child: Icon(
+                            Icons.menu,
+                          ),
+                        ),
+                      ],
+                    )
+                  : Row(
+                      children: [
+                        SvgPicture.asset(
+                          'assets/images/logout.svg',
+                        ),
+                        SizedBox(
+                          width: 19,
+                        ),
+                      ],
+                    ),
+              rowsPerPage: 9,
+              columns: const [
+                DataColumn(label: Text('ID')),
+                DataColumn(label: Text('Пол')),
+                DataColumn(label: Text('Разница в возрасте')),
+                DataColumn(label: Text('Адрес')),
+              ],
+              source: dataSourceMock,
+            );
           } else {
             final dataSource = ClientDataSource(snapshot.data!);
             return PaginatedDataTable(

@@ -11,7 +11,7 @@ class PieChartExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final data = testClientList.list ?? [];
+    final data = testClientList.clients ?? [];
 
     final maleCount = data.where((client) => client.gender == true).length;
     final femaleCount = data.where((client) => client.gender == false).length;
@@ -28,6 +28,7 @@ class PieChartExample extends StatelessWidget {
           MediaQuery.of(context).size.width < 1100
               ? Row(
                   children: [
+                    
                     GestureDetector(
                       onTap: context.read<MenuAppController>().controlMenu,
                       child: Icon(

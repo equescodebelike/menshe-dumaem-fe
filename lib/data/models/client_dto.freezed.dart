@@ -22,6 +22,7 @@ ClientDto _$ClientDtoFromJson(Map<String, dynamic> json) {
 mixin _$ClientDto {
   int? get id => throw _privateConstructorUsedError;
   bool? get gender => throw _privateConstructorUsedError;
+  String? get externalId => throw _privateConstructorUsedError;
   int? get ageMin => throw _privateConstructorUsedError;
   int? get ageMax => throw _privateConstructorUsedError;
   AddressDto? get address => throw _privateConstructorUsedError;
@@ -38,7 +39,12 @@ abstract class $ClientDtoCopyWith<$Res> {
       _$ClientDtoCopyWithImpl<$Res, ClientDto>;
   @useResult
   $Res call(
-      {int? id, bool? gender, int? ageMin, int? ageMax, AddressDto? address});
+      {int? id,
+      bool? gender,
+      String? externalId,
+      int? ageMin,
+      int? ageMax,
+      AddressDto? address});
 
   $AddressDtoCopyWith<$Res>? get address;
 }
@@ -58,6 +64,7 @@ class _$ClientDtoCopyWithImpl<$Res, $Val extends ClientDto>
   $Res call({
     Object? id = freezed,
     Object? gender = freezed,
+    Object? externalId = freezed,
     Object? ageMin = freezed,
     Object? ageMax = freezed,
     Object? address = freezed,
@@ -71,6 +78,10 @@ class _$ClientDtoCopyWithImpl<$Res, $Val extends ClientDto>
           ? _value.gender
           : gender // ignore: cast_nullable_to_non_nullable
               as bool?,
+      externalId: freezed == externalId
+          ? _value.externalId
+          : externalId // ignore: cast_nullable_to_non_nullable
+              as String?,
       ageMin: freezed == ageMin
           ? _value.ageMin
           : ageMin // ignore: cast_nullable_to_non_nullable
@@ -108,7 +119,12 @@ abstract class _$$ClientDtoImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int? id, bool? gender, int? ageMin, int? ageMax, AddressDto? address});
+      {int? id,
+      bool? gender,
+      String? externalId,
+      int? ageMin,
+      int? ageMax,
+      AddressDto? address});
 
   @override
   $AddressDtoCopyWith<$Res>? get address;
@@ -127,6 +143,7 @@ class __$$ClientDtoImplCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? gender = freezed,
+    Object? externalId = freezed,
     Object? ageMin = freezed,
     Object? ageMax = freezed,
     Object? address = freezed,
@@ -140,6 +157,10 @@ class __$$ClientDtoImplCopyWithImpl<$Res>
           ? _value.gender
           : gender // ignore: cast_nullable_to_non_nullable
               as bool?,
+      externalId: freezed == externalId
+          ? _value.externalId
+          : externalId // ignore: cast_nullable_to_non_nullable
+              as String?,
       ageMin: freezed == ageMin
           ? _value.ageMin
           : ageMin // ignore: cast_nullable_to_non_nullable
@@ -157,10 +178,16 @@ class __$$ClientDtoImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(fieldRename: FieldRename.snake)
 class _$ClientDtoImpl implements _ClientDto {
   const _$ClientDtoImpl(
-      {this.id, this.gender, this.ageMin, this.ageMax, this.address});
+      {this.id,
+      this.gender,
+      this.externalId,
+      this.ageMin,
+      this.ageMax,
+      this.address});
 
   factory _$ClientDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$ClientDtoImplFromJson(json);
@@ -170,6 +197,8 @@ class _$ClientDtoImpl implements _ClientDto {
   @override
   final bool? gender;
   @override
+  final String? externalId;
+  @override
   final int? ageMin;
   @override
   final int? ageMax;
@@ -178,7 +207,7 @@ class _$ClientDtoImpl implements _ClientDto {
 
   @override
   String toString() {
-    return 'ClientDto(id: $id, gender: $gender, ageMin: $ageMin, ageMax: $ageMax, address: $address)';
+    return 'ClientDto(id: $id, gender: $gender, externalId: $externalId, ageMin: $ageMin, ageMax: $ageMax, address: $address)';
   }
 
   @override
@@ -188,6 +217,8 @@ class _$ClientDtoImpl implements _ClientDto {
             other is _$ClientDtoImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.gender, gender) || other.gender == gender) &&
+            (identical(other.externalId, externalId) ||
+                other.externalId == externalId) &&
             (identical(other.ageMin, ageMin) || other.ageMin == ageMin) &&
             (identical(other.ageMax, ageMax) || other.ageMax == ageMax) &&
             (identical(other.address, address) || other.address == address));
@@ -196,7 +227,7 @@ class _$ClientDtoImpl implements _ClientDto {
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, gender, ageMin, ageMax, address);
+      Object.hash(runtimeType, id, gender, externalId, ageMin, ageMax, address);
 
   @JsonKey(ignore: true)
   @override
@@ -216,6 +247,7 @@ abstract class _ClientDto implements ClientDto {
   const factory _ClientDto(
       {final int? id,
       final bool? gender,
+      final String? externalId,
       final int? ageMin,
       final int? ageMax,
       final AddressDto? address}) = _$ClientDtoImpl;
@@ -227,6 +259,8 @@ abstract class _ClientDto implements ClientDto {
   int? get id;
   @override
   bool? get gender;
+  @override
+  String? get externalId;
   @override
   int? get ageMin;
   @override

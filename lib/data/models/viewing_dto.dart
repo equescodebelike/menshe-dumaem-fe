@@ -11,6 +11,9 @@ part 'viewing_dto.g.dart';
 
 @freezed
 class ViewingDto with _$ViewingDto {
+  @JsonSerializable(
+    fieldRename: FieldRename.snake,
+  )
   const factory ViewingDto({
     DateTime? startTime,
     DateTime? finishTime,

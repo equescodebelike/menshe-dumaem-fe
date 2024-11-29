@@ -95,7 +95,8 @@ class __$$ChannelDtoImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(fieldRename: FieldRename.snake)
 class _$ChannelDtoImpl implements _ChannelDto {
   const _$ChannelDtoImpl({this.id});
 

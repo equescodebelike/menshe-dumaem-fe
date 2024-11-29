@@ -209,7 +209,8 @@ class __$$ViewingDtoImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(fieldRename: FieldRename.snake)
 class _$ViewingDtoImpl implements _ViewingDto {
   const _$ViewingDtoImpl(
       {this.startTime,

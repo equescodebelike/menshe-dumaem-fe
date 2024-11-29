@@ -7,6 +7,9 @@ part 'channel_package_dto.g.dart';
 
 @freezed
 class ChannelPackageDto with _$ChannelPackageDto {
+  @JsonSerializable(
+    fieldRename: FieldRename.snake,
+  )
   const factory ChannelPackageDto({
     String? name,
 

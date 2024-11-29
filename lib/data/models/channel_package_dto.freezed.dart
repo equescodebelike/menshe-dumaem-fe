@@ -95,7 +95,8 @@ class __$$ChannelPackageDtoImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(fieldRename: FieldRename.snake)
 class _$ChannelPackageDtoImpl implements _ChannelPackageDto {
   const _$ChannelPackageDtoImpl({this.name});
 

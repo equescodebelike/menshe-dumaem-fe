@@ -7,6 +7,9 @@ part 'address_dto.g.dart';
 
 @freezed
 class AddressDto with _$AddressDto {
+  @JsonSerializable(
+    fieldRename: FieldRename.snake,
+  )
   const factory AddressDto({
     String? address,
     Decimal? lat,

@@ -8,9 +8,11 @@ part 'client_list_dto.g.dart';
 
 @freezed
 class ClientListDto with _$ClientListDto {
+  @JsonSerializable(
+    fieldRename: FieldRename.snake,
+  )
   const factory ClientListDto({
-    List<ClientDto>? list,
-
+    List<ClientDto>? clients,
   }) = _ClientListDto;
 
   factory ClientListDto.fromJson(Map<String, dynamic> json) =>

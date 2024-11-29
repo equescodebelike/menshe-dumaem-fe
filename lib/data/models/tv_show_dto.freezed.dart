@@ -148,7 +148,8 @@ class __$$TvShowDtoImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(fieldRename: FieldRename.snake)
 class _$TvShowDtoImpl implements _TvShowDto {
   const _$TvShowDtoImpl(
       {this.startTime,

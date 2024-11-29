@@ -20,7 +20,7 @@ ClientListDto _$ClientListDtoFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ClientListDto {
-  List<ClientDto>? get list => throw _privateConstructorUsedError;
+  List<ClientDto>? get clients => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +34,7 @@ abstract class $ClientListDtoCopyWith<$Res> {
           ClientListDto value, $Res Function(ClientListDto) then) =
       _$ClientListDtoCopyWithImpl<$Res, ClientListDto>;
   @useResult
-  $Res call({List<ClientDto>? list});
+  $Res call({List<ClientDto>? clients});
 }
 
 /// @nodoc
@@ -50,12 +50,12 @@ class _$ClientListDtoCopyWithImpl<$Res, $Val extends ClientListDto>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? list = freezed,
+    Object? clients = freezed,
   }) {
     return _then(_value.copyWith(
-      list: freezed == list
-          ? _value.list
-          : list // ignore: cast_nullable_to_non_nullable
+      clients: freezed == clients
+          ? _value.clients
+          : clients // ignore: cast_nullable_to_non_nullable
               as List<ClientDto>?,
     ) as $Val);
   }
@@ -69,7 +69,7 @@ abstract class _$$ClientListDtoImplCopyWith<$Res>
       __$$ClientListDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<ClientDto>? list});
+  $Res call({List<ClientDto>? clients});
 }
 
 /// @nodoc
@@ -83,38 +83,40 @@ class __$$ClientListDtoImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? list = freezed,
+    Object? clients = freezed,
   }) {
     return _then(_$ClientListDtoImpl(
-      list: freezed == list
-          ? _value._list
-          : list // ignore: cast_nullable_to_non_nullable
+      clients: freezed == clients
+          ? _value._clients
+          : clients // ignore: cast_nullable_to_non_nullable
               as List<ClientDto>?,
     ));
   }
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(fieldRename: FieldRename.snake)
 class _$ClientListDtoImpl implements _ClientListDto {
-  const _$ClientListDtoImpl({final List<ClientDto>? list}) : _list = list;
+  const _$ClientListDtoImpl({final List<ClientDto>? clients})
+      : _clients = clients;
 
   factory _$ClientListDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$ClientListDtoImplFromJson(json);
 
-  final List<ClientDto>? _list;
+  final List<ClientDto>? _clients;
   @override
-  List<ClientDto>? get list {
-    final value = _list;
+  List<ClientDto>? get clients {
+    final value = _clients;
     if (value == null) return null;
-    if (_list is EqualUnmodifiableListView) return _list;
+    if (_clients is EqualUnmodifiableListView) return _clients;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
 
   @override
   String toString() {
-    return 'ClientListDto(list: $list)';
+    return 'ClientListDto(clients: $clients)';
   }
 
   @override
@@ -122,13 +124,13 @@ class _$ClientListDtoImpl implements _ClientListDto {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ClientListDtoImpl &&
-            const DeepCollectionEquality().equals(other._list, _list));
+            const DeepCollectionEquality().equals(other._clients, _clients));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_list));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_clients));
 
   @JsonKey(ignore: true)
   @override
@@ -145,14 +147,14 @@ class _$ClientListDtoImpl implements _ClientListDto {
 }
 
 abstract class _ClientListDto implements ClientListDto {
-  const factory _ClientListDto({final List<ClientDto>? list}) =
+  const factory _ClientListDto({final List<ClientDto>? clients}) =
       _$ClientListDtoImpl;
 
   factory _ClientListDto.fromJson(Map<String, dynamic> json) =
       _$ClientListDtoImpl.fromJson;
 
   @override
-  List<ClientDto>? get list;
+  List<ClientDto>? get clients;
   @override
   @JsonKey(ignore: true)
   _$$ClientListDtoImplCopyWith<_$ClientListDtoImpl> get copyWith =>

@@ -95,7 +95,8 @@ class __$$CategoryDtoImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(fieldRename: FieldRename.snake)
 class _$CategoryDtoImpl implements _CategoryDto {
   const _$CategoryDtoImpl({this.name});
 
