@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:admin/data/models/client_analytics_dto.dart';
 import 'package:admin/data/models/client_list_dto.dart';
 import 'package:admin/data/models/link_dto.dart';
 import 'package:admin/data/models/tv_shows_dto.dart';
@@ -63,6 +64,24 @@ class TableRepository {
   Future<LinkDto> getDownloadPopular() async {
     try {
       final result = await service.downloadMostViewed();
+      return result;
+    } on DioException catch (error) {
+      throw Exception(error.response?.data['message']);
+    }
+  }
+
+  Future<LinkDto> getDownloadAnalyticsProfile(int clientId) async {
+    try {
+      final result = await service.downloadRecommendProfile(clientId);
+      return result;
+    } on DioException catch (error) {
+      throw Exception(error.response?.data['message']);
+    }
+  }
+
+  Future<ClientAnalyticsDto> getAnalyticsForClient(int clientId) async {
+    try {
+      final result = await service.getAnalyticsForClient(clientId);
       return result;
     } on DioException catch (error) {
       throw Exception(error.response?.data['message']);

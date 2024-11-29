@@ -15,6 +15,8 @@ class ClientDto with _$ClientDto {
     String? externalId,
     int? ageMin,
     int? ageMax,
+    String? preferredCategory,
+    String? color,
     AddressDto? address,
   }) = _ClientDto;
 

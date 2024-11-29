@@ -1,3 +1,4 @@
+import 'package:admin/screens/dashboard/analytics_client.dart';
 import 'package:admin/screens/dashboard/controllers/menu_app_controller.dart';
 import 'package:admin/responsive.dart';
 import 'package:admin/screens/dashboard/address_screen.dart';
@@ -26,6 +27,9 @@ class _MainScreenState extends State<MainScreen> {
     PieChartExample(),
     OsmPage(),
     PopularShowsScreen(),
+    ClientAnalyticsPage(
+      clientId: 42,
+    ),
   ];
 
   void _updateScreen(int index) {
