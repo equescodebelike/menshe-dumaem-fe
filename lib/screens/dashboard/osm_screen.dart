@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:admin/data/models/client_list_dto.dart';
 import 'package:admin/data/repository/table_repository.dart';
 import 'package:admin/di/app_components.dart';
+import 'package:admin/utils/hex_to_color.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -74,28 +75,36 @@ class _MainState extends State<Main> with OSMMixinObserver {
           final lat = address.lat!.toDouble();
           final lon = address.lon!.toDouble();
           final point = GeoPoint(latitude: lat, longitude: lon);
-          await controller.addMarker(
-            point,
-            markerIcon: MarkerIcon(
-              // icon: Icon(
-              //   Icons.location_on,
-              //   size: 48,
-              //   color: Colors.red,
-              // ),
-              iconWidget: SvgPicture.asset('assets/icons/mark.svg'),
-            ),
-            angle: 0,
-            iconAnchor: IconAnchor(anchor: Anchor.top),
-          );
+
+          if (client.color == null) {
+            await controller.addMarker(
+              point,
+              markerIcon: MarkerIcon(
+                iconWidget: SvgPicture.asset(
+                  'assets/icons/mark.svg',
+                ),
+              ),
+              angle: 0,
+              iconAnchor: IconAnchor(anchor: Anchor.top),
+            );
+          } else {
+            final color = hexToColor(client.color!);
+
+            await controller.addMarker(
+              point,
+              markerIcon: MarkerIcon(
+                iconWidget: SvgPicture.asset(
+                  'assets/icons/mark.svg',
+                  colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
+                ),
+              ),
+              angle: 0,
+              iconAnchor: IconAnchor(anchor: Anchor.top),
+            );
+          }
         }
       }
     }
-    // await controller.addMarker(GeoPoint(),
-    //     markerIcon: MarkerIcon,
-    //     angle: pi / 3,
-    //     iconAnchor: IconAnchor(
-    //       anchor: Anchor.top,
-    //     ));
   }
 
   @override
@@ -250,27 +259,8 @@ class _MainState extends State<Main> with OSMMixinObserver {
                       userLocationIcon: userLocationIcon,
                     ),
                   ),
-                  Positioned(
-                    bottom: 148,
-                    right: 15,
-                    child: IconButton(
-                      onPressed: () async {
-                        Future.forEach(geos, (element) async {
-                          await controller.removeMarker(element);
-                          await Future.delayed(
-                              const Duration(milliseconds: 100));
-                        });
-                      },
-                      icon: const Icon(Icons.clear_all),
-                    ),
-                  ),
-                  Positioned(
-                    bottom: 92,
-                    right: 15,
-                    child: DirectionRouteLocation(
-                      controller: controller,
-                    ),
-                  ),
+                  
+                 
                   // Positioned(
                   //   top: kIsWeb ? 26 : topPadding,
                   //   left: 64,
