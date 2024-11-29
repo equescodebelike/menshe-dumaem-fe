@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:admin/data/models/client_list_dto.dart';
+import 'package:admin/data/models/link_dto.dart';
 import 'package:admin/data/models/tv_shows_dto.dart';
 import 'package:admin/data/service/table_service.dart';
 import 'package:dio/dio.dart';
@@ -54,6 +55,15 @@ class TableRepository {
       return TvShowsDto(
         tvShows: sortedShows,
       );
+    } on DioException catch (error) {
+      throw Exception(error.response?.data['message']);
+    }
+  }
+
+  Future<LinkDto> getDownloadPopular() async {
+    try {
+      final result = await service.downloadMostViewed();
+      return result;
     } on DioException catch (error) {
       throw Exception(error.response?.data['message']);
     }
