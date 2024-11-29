@@ -1,9 +1,11 @@
 import 'package:admin/screens/dashboard/controllers/menu_app_controller.dart';
 import 'package:admin/responsive.dart';
 import 'package:admin/screens/dashboard/dashboard_screen.dart';
+import 'package:admin/screens/dashboard/osm_screen.dart';
 import 'package:admin/screens/dashboard/pie_chart.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'package:provider/provider.dart';
 
 import 'components/side_menu.dart';
@@ -19,19 +21,27 @@ class _MainScreenState extends State<MainScreen> {
   final List<Widget> _screens = [
     DashboardScreen(),
     PieChartExample(),
+    OsmPage(),
   ];
 
   void _updateScreen(int index) {
     setState(() {
       _selectedScreenIndex = index;
+      MediaQuery.of(context).size.width < 1100
+          ? Navigator.of(context).pop()
+          : null;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key:context.read<MenuAppController>().scaffoldKey,
-      drawer: SideMenu(onSelectScreen: _updateScreen),
+      key: context.read<MenuAppController>().scaffoldKey,
+      drawer: PointerInterceptor(
+        child: SideMenu(
+          onSelectScreen: _updateScreen,
+        ),
+      ),
       body: SafeArea(
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,

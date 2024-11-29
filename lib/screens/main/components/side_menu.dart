@@ -30,6 +30,11 @@ class SideMenu extends StatelessWidget {
             svgSrc: "assets/icons/menu_task.svg",
             press: () => onSelectScreen(1),
           ),
+          DrawerListTile(
+            title: "Карта",
+            svgSrc: 'assets/icons/map.svg',
+            press: () => onSelectScreen(2),
+          )
         ],
       ),
     );
