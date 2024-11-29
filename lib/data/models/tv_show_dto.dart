@@ -8,13 +8,15 @@ part 'tv_show_dto.g.dart';
 
 @freezed
 class TvShowDto with _$TvShowDto {
+  @JsonSerializable(
+    fieldRename: FieldRename.snake,
+  )
   const factory TvShowDto({
     DateTime? startTime,
     DateTime? finishTime,
     String? name,
     String? mainCategory,
     List<CategoryDto>? categories,
-
   }) = _TvShowDto;
 
   factory TvShowDto.fromJson(Map<String, dynamic> json) =>

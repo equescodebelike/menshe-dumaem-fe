@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class SideMenu extends StatelessWidget {
+  final Function(int) onSelectScreen; // Callback для переключения экранов
+
   const SideMenu({
+    required this.onSelectScreen,
     Key? key,
   }) : super(key: key);
 
@@ -12,13 +15,20 @@ class SideMenu extends StatelessWidget {
       child: ListView(
         children: [
           DrawerHeader(
-            child:
-                Align(alignment: Alignment.center, child: Image.asset('assets/images/logo.png')),
+            child: Align(
+              alignment: Alignment.center,
+              child: Image.asset('assets/images/logo.png'),
+            ),
           ),
           DrawerListTile(
             title: "Главная",
             svgSrc: "assets/icons/menu_dashboard.svg",
-            press: () {},
+            press: () => onSelectScreen(0),
+          ),
+          DrawerListTile(
+            title: "Диаграмма",
+            svgSrc: "assets/icons/menu_task.svg",
+            press: () => onSelectScreen(1),
           ),
         ],
       ),
@@ -27,15 +37,16 @@ class SideMenu extends StatelessWidget {
 }
 
 class DrawerListTile extends StatelessWidget {
+  final String title;
+  final String svgSrc;
+  final VoidCallback press;
+
   const DrawerListTile({
     Key? key,
     required this.title,
     required this.svgSrc,
     required this.press,
-  }) : super(key: key);
-
-  final String title, svgSrc;
-  final VoidCallback press;
+  });
 
   @override
   Widget build(BuildContext context) {

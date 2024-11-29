@@ -7,6 +7,9 @@ part 'category_dto.g.dart';
 
 @freezed
 class CategoryDto with _$CategoryDto {
+  @JsonSerializable(
+    fieldRename: FieldRename.snake,
+  )
   const factory CategoryDto({
     String? name,
   }) = _CategoryDto;
