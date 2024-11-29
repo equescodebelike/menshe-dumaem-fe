@@ -1,6 +1,6 @@
 import 'package:admin/constants.dart';
 import 'package:admin/screens/dashboard/controllers/menu_app_controller.dart';
-import 'package:admin/screens/dashboard/json_table.dart';
+import 'package:admin/screens/dashboard/address_table.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';

@@ -12,8 +12,10 @@ class TvShowDto with _$TvShowDto {
     fieldRename: FieldRename.snake,
   )
   const factory TvShowDto({
+    int? id,
     DateTime? startTime,
     DateTime? finishTime,
+    int? viewCount,
     String? name,
     String? mainCategory,
     List<CategoryDto>? categories,

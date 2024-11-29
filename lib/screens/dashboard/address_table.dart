@@ -1,9 +1,14 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:admin/data/models/address_dto.dart';
 import 'package:admin/data/models/client_dto.dart';
 import 'package:admin/data/models/client_list_dto.dart';
 import 'package:admin/di/app_components.dart';
 import 'package:admin/screens/dashboard/controllers/menu_app_controller.dart';
 import 'package:decimal/decimal.dart';
+import 'package:dio/dio.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -167,6 +172,42 @@ final ClientListDto testClientList = ClientListDto(
 class DataTableExample extends StatelessWidget {
   const DataTableExample({super.key});
 
+  Future<void> updateAddressesWeb(Uint8List fileBytes, String fileName) async {
+    final repository = AppComponents().tableRepository;
+    try {
+      final formData = FormData.fromMap({
+        'file': MultipartFile.fromBytes(fileBytes, filename: fileName),
+      });
+
+      await repository.updateAddresses(formData);
+    } on DioException catch (error) {
+      throw Exception(
+          error.response?.data['message'] ?? 'Error updating addresses');
+    }
+  }
+
+  Future<void> _uploadFile() async {
+    final repository = AppComponents().tableRepository;
+    try {
+      final r = await repository.getPopularShows();
+      final result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['csv'],
+      );
+
+      if (result == null || result.files.isEmpty) return;
+
+      final fileBytes = result.files.single.bytes;
+      final fileName = result.files.single.name;
+
+      if (fileBytes == null) {
+        throw Exception('Unable to read file content.');
+      }
+
+      await repository.updateAddressesBinary(fileBytes);
+    } catch (e) {}
+  }
+
   @override
   Widget build(BuildContext context) {
     // final dataSource = ClientDataSource(testClientList);
@@ -184,16 +225,18 @@ class DataTableExample extends StatelessWidget {
               actions: [
                 Row(
                   children: [
-                    OutlinedButton(onPressed: () {}, child: Text('Фильтры')),
+                    OutlinedButton(
+                      onPressed: () {},
+                      child: Text('Фильтры'),
+                    ),
                     SizedBox(
                       width: 5,
                     ),
                     OutlinedButton(
-                      onPressed: () {},
-                      child: SvgPicture.asset(
-                        'assets/images/arrows.svg',
-                        color: Colors.white,
-                      ),
+                      onPressed: () {
+                        _uploadFile();
+                      },
+                      child: Text('Загрузить'),
                     )
                   ],
                 )
@@ -246,11 +289,10 @@ class DataTableExample extends StatelessWidget {
                       width: 5,
                     ),
                     OutlinedButton(
-                      onPressed: () {},
-                      child: SvgPicture.asset(
-                        'assets/images/arrows.svg',
-                        color: Colors.white,
-                      ),
+                      onPressed: () {
+                        _uploadFile();
+                      },
+                      child: Text('Загрузить'),
                     )
                   ],
                 )
@@ -302,11 +344,10 @@ class DataTableExample extends StatelessWidget {
                       width: 5,
                     ),
                     OutlinedButton(
-                      onPressed: () {},
-                      child: SvgPicture.asset(
-                        'assets/images/arrows.svg',
-                        color: Colors.white,
-                      ),
+                      onPressed: () {
+                        _uploadFile();
+                      },
+                      child: Text('Загрузить'),
                     )
                   ],
                 )
