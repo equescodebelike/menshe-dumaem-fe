@@ -25,6 +25,9 @@ abstract class TableService {
   @POST('/analytics/most_viewed_tw_shows/')
   Future<TvShowsDto> getPopularShows();
 
+  @GET('/data/clients/')
+  Future<ClientListDto> getTableAddress();
+
   @POST('/data/update_addresses/')
   @Headers({'Content-Type': 'text/csv'})
   Future<void> updateAddressesBinary(@Body() List<int> fileBytes);

@@ -31,7 +31,7 @@ class AppComponents {
 
   Future<void> init() async {
     dio.options
-      ..baseUrl = 'http://51.250.42.129:8000'
+      ..baseUrl = 'https://freedom-lens.ru'
       ..contentType = Headers.jsonContentType
       ..connectTimeout = timeout
       ..receiveTimeout = timeout

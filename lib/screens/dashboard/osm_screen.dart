@@ -1,7 +1,13 @@
+import 'dart:math';
+
+import 'package:admin/data/models/client_list_dto.dart';
+import 'package:admin/data/repository/table_repository.dart';
+import 'package:admin/di/app_components.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 
 class OsmPage extends StatelessWidget {
@@ -48,6 +54,7 @@ class _MainState extends State<Main> with OSMMixinObserver {
       // ),
       useExternalTracking: disableMapControlUserTracking.value,
     );
+    setPoints();
     controller.addObserver(this);
     trackingNotifier.addListener(() async {
       if (userLocationNotifier.value != null && !trackingNotifier.value) {
@@ -57,6 +64,40 @@ class _MainState extends State<Main> with OSMMixinObserver {
     });
   }
 
+  Future<void> setPoints() async {
+    final repository = AppComponents().tableRepository;
+    final list = await repository.getTable();
+    if (list.clients != null) {
+      for (final client in list.clients!) {
+        final address = client.address;
+        if (address != null && address.lat != null && address.lon != null) {
+          final lat = address.lat!.toDouble();
+          final lon = address.lon!.toDouble();
+          final point = GeoPoint(latitude: lat, longitude: lon);
+          await controller.addMarker(
+            point,
+            markerIcon: MarkerIcon(
+              // icon: Icon(
+              //   Icons.location_on,
+              //   size: 48,
+              //   color: Colors.red,
+              // ),
+              iconWidget: SvgPicture.asset('assets/icons/mark.svg'),
+            ),
+            angle: 0,
+            iconAnchor: IconAnchor(anchor: Anchor.top),
+          );
+        }
+      }
+    }
+    // await controller.addMarker(GeoPoint(),
+    //     markerIcon: MarkerIcon,
+    //     angle: pi / 3,
+    //     iconAnchor: IconAnchor(
+    //       anchor: Anchor.top,
+    //     ));
+  }
+
   @override
   Future<void> mapIsReady(bool isReady) async {
     if (isReady) {
@@ -64,50 +105,50 @@ class _MainState extends State<Main> with OSMMixinObserver {
     }
   }
 
-  @override
-  void onSingleTap(GeoPoint position) {
-    super.onSingleTap(position);
-    Future.microtask(() async {
-      if (lastGeoPoint.value != null) {
-        // await controller.changeLocationMarker(
-        //   oldLocation: lastGeoPoint.value!,
-        //   newLocation: position,
-        //   //iconAnchor: IconAnchor(anchor: Anchor.top),
-        // );
-        //controller.removeMarker(lastGeoPoint.value!);
-        await controller.addMarker(
-          position,
-          markerIcon: const MarkerIcon(
-            icon: Icon(
-              Icons.person_pin,
-              color: Colors.red,
-              size: 32,
-            ),
-          ),
-          //angle: userLocation.angle,
-        );
-      } else {
-        await controller.addMarker(
-          position,
-          markerIcon: const MarkerIcon(
-            icon: Icon(
-              Icons.person_pin,
-              color: Colors.red,
-              size: 32,
-            ),
-          ),
-          // iconAnchor: IconAnchor(
-          //   anchor: Anchor.left,
-          //   //offset: (x: 32.5, y: -32),
-          // ),
-          //angle: -pi / 4,
-        );
-      }
-      //await controller.moveTo(position, animate: true);
-      lastGeoPoint.value = position;
-      geos.add(position);
-    });
-  }
+  // @override
+  // void onSingleTap(GeoPoint position) {
+  //   super.onSingleTap(position);
+  //   Future.microtask(() async {
+  //     if (lastGeoPoint.value != null) {
+  //       // await controller.changeLocationMarker(
+  //       //   oldLocation: lastGeoPoint.value!,
+  //       //   newLocation: position,
+  //       //   //iconAnchor: IconAnchor(anchor: Anchor.top),
+  //       // );
+  //       //controller.removeMarker(lastGeoPoint.value!);
+  //       await controller.addMarker(
+  //         position,
+  //         markerIcon: const MarkerIcon(
+  //           icon: Icon(
+  //             Icons.person_pin,
+  //             color: Colors.red,
+  //             size: 32,
+  //           ),
+  //         ),
+  //         //angle: userLocation.angle,
+  //       );
+  //     } else {
+  //       await controller.addMarker(
+  //         position,
+  //         markerIcon: const MarkerIcon(
+  //           icon: Icon(
+  //             Icons.person_pin,
+  //             color: Colors.red,
+  //             size: 32,
+  //           ),
+  //         ),
+  //         // iconAnchor: IconAnchor(
+  //         //   anchor: Anchor.left,
+  //         //   //offset: (x: 32.5, y: -32),
+  //         // ),
+  //         //angle: -pi / 4,
+  //       );
+  //     }
+  //     //await controller.moveTo(position, animate: true);
+  //     lastGeoPoint.value = position;
+  //     geos.add(position);
+  //   });
+  // }
 
   @override
   void onRegionChanged(Region region) {
@@ -423,7 +464,7 @@ class Map extends StatelessWidget {
       osmOption: OSMOption(
         enableRotationByGesture: true,
         zoomOption: const ZoomOption(
-          initZoom: 16,
+          initZoom: 13,
           minZoomLevel: 3,
           maxZoomLevel: 19,
           stepZoom: 1.0,

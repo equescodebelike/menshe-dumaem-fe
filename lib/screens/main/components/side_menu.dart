@@ -26,20 +26,27 @@ class SideMenu extends StatelessWidget {
             press: () => onSelectScreen(0),
           ),
           DrawerListTile(
-            title: "Самые популярные передачи",
-            svgSrc: "assets/icons/menu_dashboard.svg",
-            press: () => onSelectScreen(1),
-          ),
-          DrawerListTile(
-            title: "Диаграмма",
+            title: "Аналитика по адресам",
             svgSrc: "assets/icons/menu_task.svg",
             press: () => onSelectScreen(2),
+          ),
+          GestureDetector(
+            child: DrawerListTile(
+              title: "Самые популярные передачи",
+              svgSrc: "assets/icons/menu_dashboard.svg",
+              press: () => onSelectScreen(1),
+            ),
+          ),
+          DrawerListTile(
+            title: "Аналитика по просмотрам",
+            svgSrc: 'assets/icons/menu_task.svg',
+            press: () => onSelectScreen(4),
           ),
           DrawerListTile(
             title: "Карта",
             svgSrc: 'assets/icons/map.svg',
             press: () => onSelectScreen(3),
-          )
+          ),
         ],
       ),
     );
