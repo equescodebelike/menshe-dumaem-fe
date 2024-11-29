@@ -21,19 +21,24 @@ class SideMenu extends StatelessWidget {
             ),
           ),
           DrawerListTile(
-            title: "Главная",
+            title: "Пользователи по адресам",
             svgSrc: "assets/icons/menu_dashboard.svg",
             press: () => onSelectScreen(0),
           ),
           DrawerListTile(
+            title: "Самые популярные передачи",
+            svgSrc: "assets/icons/menu_dashboard.svg",
+            press: () => onSelectScreen(1),
+          ),
+          DrawerListTile(
             title: "Диаграмма",
             svgSrc: "assets/icons/menu_task.svg",
-            press: () => onSelectScreen(1),
+            press: () => onSelectScreen(2),
           ),
           DrawerListTile(
             title: "Карта",
             svgSrc: 'assets/icons/map.svg',
-            press: () => onSelectScreen(2),
+            press: () => onSelectScreen(3),
           )
         ],
       ),

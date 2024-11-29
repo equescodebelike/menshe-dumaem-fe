@@ -20,8 +20,10 @@ TvShowDto _$TvShowDtoFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$TvShowDto {
+  int? get id => throw _privateConstructorUsedError;
   DateTime? get startTime => throw _privateConstructorUsedError;
   DateTime? get finishTime => throw _privateConstructorUsedError;
+  int? get viewCount => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get mainCategory => throw _privateConstructorUsedError;
   List<CategoryDto>? get categories => throw _privateConstructorUsedError;
@@ -38,8 +40,10 @@ abstract class $TvShowDtoCopyWith<$Res> {
       _$TvShowDtoCopyWithImpl<$Res, TvShowDto>;
   @useResult
   $Res call(
-      {DateTime? startTime,
+      {int? id,
+      DateTime? startTime,
       DateTime? finishTime,
+      int? viewCount,
       String? name,
       String? mainCategory,
       List<CategoryDto>? categories});
@@ -58,13 +62,19 @@ class _$TvShowDtoCopyWithImpl<$Res, $Val extends TvShowDto>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = freezed,
     Object? startTime = freezed,
     Object? finishTime = freezed,
+    Object? viewCount = freezed,
     Object? name = freezed,
     Object? mainCategory = freezed,
     Object? categories = freezed,
   }) {
     return _then(_value.copyWith(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
       startTime: freezed == startTime
           ? _value.startTime
           : startTime // ignore: cast_nullable_to_non_nullable
@@ -73,6 +83,10 @@ class _$TvShowDtoCopyWithImpl<$Res, $Val extends TvShowDto>
           ? _value.finishTime
           : finishTime // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      viewCount: freezed == viewCount
+          ? _value.viewCount
+          : viewCount // ignore: cast_nullable_to_non_nullable
+              as int?,
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -98,8 +112,10 @@ abstract class _$$TvShowDtoImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {DateTime? startTime,
+      {int? id,
+      DateTime? startTime,
       DateTime? finishTime,
+      int? viewCount,
       String? name,
       String? mainCategory,
       List<CategoryDto>? categories});
@@ -116,13 +132,19 @@ class __$$TvShowDtoImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = freezed,
     Object? startTime = freezed,
     Object? finishTime = freezed,
+    Object? viewCount = freezed,
     Object? name = freezed,
     Object? mainCategory = freezed,
     Object? categories = freezed,
   }) {
     return _then(_$TvShowDtoImpl(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
       startTime: freezed == startTime
           ? _value.startTime
           : startTime // ignore: cast_nullable_to_non_nullable
@@ -131,6 +153,10 @@ class __$$TvShowDtoImplCopyWithImpl<$Res>
           ? _value.finishTime
           : finishTime // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      viewCount: freezed == viewCount
+          ? _value.viewCount
+          : viewCount // ignore: cast_nullable_to_non_nullable
+              as int?,
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -152,8 +178,10 @@ class __$$TvShowDtoImplCopyWithImpl<$Res>
 @JsonSerializable(fieldRename: FieldRename.snake)
 class _$TvShowDtoImpl implements _TvShowDto {
   const _$TvShowDtoImpl(
-      {this.startTime,
+      {this.id,
+      this.startTime,
       this.finishTime,
+      this.viewCount,
       this.name,
       this.mainCategory,
       final List<CategoryDto>? categories})
@@ -163,9 +191,13 @@ class _$TvShowDtoImpl implements _TvShowDto {
       _$$TvShowDtoImplFromJson(json);
 
   @override
+  final int? id;
+  @override
   final DateTime? startTime;
   @override
   final DateTime? finishTime;
+  @override
+  final int? viewCount;
   @override
   final String? name;
   @override
@@ -182,7 +214,7 @@ class _$TvShowDtoImpl implements _TvShowDto {
 
   @override
   String toString() {
-    return 'TvShowDto(startTime: $startTime, finishTime: $finishTime, name: $name, mainCategory: $mainCategory, categories: $categories)';
+    return 'TvShowDto(id: $id, startTime: $startTime, finishTime: $finishTime, viewCount: $viewCount, name: $name, mainCategory: $mainCategory, categories: $categories)';
   }
 
   @override
@@ -190,10 +222,13 @@ class _$TvShowDtoImpl implements _TvShowDto {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TvShowDtoImpl &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.startTime, startTime) ||
                 other.startTime == startTime) &&
             (identical(other.finishTime, finishTime) ||
                 other.finishTime == finishTime) &&
+            (identical(other.viewCount, viewCount) ||
+                other.viewCount == viewCount) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.mainCategory, mainCategory) ||
                 other.mainCategory == mainCategory) &&
@@ -203,8 +238,15 @@ class _$TvShowDtoImpl implements _TvShowDto {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, startTime, finishTime, name,
-      mainCategory, const DeepCollectionEquality().hash(_categories));
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      startTime,
+      finishTime,
+      viewCount,
+      name,
+      mainCategory,
+      const DeepCollectionEquality().hash(_categories));
 
   @JsonKey(ignore: true)
   @override
@@ -222,8 +264,10 @@ class _$TvShowDtoImpl implements _TvShowDto {
 
 abstract class _TvShowDto implements TvShowDto {
   const factory _TvShowDto(
-      {final DateTime? startTime,
+      {final int? id,
+      final DateTime? startTime,
       final DateTime? finishTime,
+      final int? viewCount,
       final String? name,
       final String? mainCategory,
       final List<CategoryDto>? categories}) = _$TvShowDtoImpl;
@@ -232,9 +276,13 @@ abstract class _TvShowDto implements TvShowDto {
       _$TvShowDtoImpl.fromJson;
 
   @override
+  int? get id;
+  @override
   DateTime? get startTime;
   @override
   DateTime? get finishTime;
+  @override
+  int? get viewCount;
   @override
   String? get name;
   @override
