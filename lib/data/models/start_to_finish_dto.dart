@@ -15,7 +15,7 @@ class StartToFinishDto with _$StartToFinishDto {
   const factory StartToFinishDto({
     String? startTime,
     String? finishTime,
-    String? sortBy, 
+    String? sort_by, 
     int? ageMin,    
     int? ageMax,    
   }) = _StartToFinishDto;

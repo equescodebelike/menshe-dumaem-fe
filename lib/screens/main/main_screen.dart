@@ -54,12 +54,10 @@ class _MainScreenState extends State<MainScreen> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Боковое меню для больших экранов
             if (Responsive.isDesktop(context))
               Expanded(
                 child: SideMenu(onSelectScreen: _updateScreen),
               ),
-            // Основной экран
             Expanded(
               flex: 5,
               child: _screens[_selectedScreenIndex],

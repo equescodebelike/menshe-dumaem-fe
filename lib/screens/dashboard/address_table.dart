@@ -210,7 +210,6 @@ class DataTableExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final dataSource = ClientDataSource(testClientList);
     final repository = AppComponents().tableRepository;
 
     return FutureBuilder(
