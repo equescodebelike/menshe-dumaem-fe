@@ -82,11 +82,12 @@ class _TableService implements TableService {
   }
 
   @override
-  Future<TvShowsDto> getPopularShows() async {
+  Future<TvShowsDto> getPopularShows({StartToFinishDto? request}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
-    const Map<String, dynamic>? _data = null;
+    final _data = request;
     final _options = _setStreamType<TvShowsDto>(Options(
       method: 'POST',
       headers: _headers,

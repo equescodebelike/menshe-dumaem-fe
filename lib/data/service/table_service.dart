@@ -6,6 +6,7 @@ import 'package:admin/data/models/client_analytics_dto.dart';
 import 'package:admin/data/models/client_dto.dart';
 import 'package:admin/data/models/client_list_dto.dart';
 import 'package:admin/data/models/link_dto.dart';
+import 'package:admin/data/models/start_to_finish_dto.dart';
 import 'package:admin/data/models/tv_shows_dto.dart';
 import 'package:dio/dio.dart' hide Headers;
 import 'package:retrofit/error_logger.dart';
@@ -29,7 +30,9 @@ abstract class TableService {
 
   // фильтры
   @POST('/analytics/most_viewed_tw_shows/')
-  Future<TvShowsDto> getPopularShows();
+  Future<TvShowsDto> getPopularShows({
+    @Body() StartToFinishDto? request,
+  });
 
   @GET('/data/clients/')
   Future<ClientListDto> getTableAddress();

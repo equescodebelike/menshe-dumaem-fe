@@ -189,7 +189,7 @@ class DataTableExample extends StatelessWidget {
   Future<void> _uploadFile() async {
     final repository = AppComponents().tableRepository;
     try {
-      final r = await repository.getPopularShows();
+      final r = await repository.getPopularShows(null);
       final result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
         allowedExtensions: ['csv'],
@@ -226,17 +226,10 @@ class DataTableExample extends StatelessWidget {
                 Row(
                   children: [
                     OutlinedButton(
-                      onPressed: () {},
-                      child: Text('Фильтры'),
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    OutlinedButton(
                       onPressed: () {
                         _uploadFile();
                       },
-                      child: Text('Загрузить'),
+                      child: Text('Парсинг csv'),
                     )
                   ],
                 )
@@ -284,15 +277,11 @@ class DataTableExample extends StatelessWidget {
               actions: [
                 Row(
                   children: [
-                    OutlinedButton(onPressed: () {}, child: Text('Фильтры')),
-                    SizedBox(
-                      width: 5,
-                    ),
                     OutlinedButton(
                       onPressed: () {
                         _uploadFile();
                       },
-                      child: Text('Загрузить'),
+                      child: Text('Парсинг csv'),
                     )
                   ],
                 )
@@ -339,15 +328,11 @@ class DataTableExample extends StatelessWidget {
               actions: [
                 Row(
                   children: [
-                    OutlinedButton(onPressed: () {}, child: Text('Фильтры')),
-                    SizedBox(
-                      width: 5,
-                    ),
                     OutlinedButton(
                       onPressed: () {
                         _uploadFile();
                       },
-                      child: Text('Загрузить'),
+                      child: Text('Парсинг csv'),
                     )
                   ],
                 )
