@@ -350,7 +350,10 @@ class ZoomNavigation extends StatelessWidget {
               padding: EdgeInsets.zero,
             ),
             child: const Center(
-              child: Icon(Icons.add),
+              child: Icon(
+                Icons.add,
+                color: Colors.black,
+              ),
             ),
             onPressed: () async {
               controller.zoomIn();
@@ -371,8 +374,8 @@ class ZoomNavigation extends StatelessWidget {
               backgroundColor: Colors.white,
               padding: EdgeInsets.zero,
             ),
-            child: const Center(
-              child: Icon(Icons.remove),
+            child: Center(
+              child: SvgPicture.asset('assets/icons/minus.svg'),
             ),
             onPressed: () async {
               controller.zoomOut();
@@ -513,9 +516,9 @@ class Map extends StatelessWidget {
             iconWidget: SizedBox(
               width: 32,
               height: 64,
-              child: Image.asset(
-                "asset/directionIcon.png",
-                scale: .3,
+              child: SvgPicture.asset(
+                "assets/icons/geo_set.svg",
+                
               ),
             ),
           ),
@@ -617,7 +620,7 @@ class ActivationUserLocation extends StatelessWidget {
                   },
                 );
               }
-              return const Icon(Icons.near_me);
+              return SvgPicture.asset('assets/icons/geo_set.svg');
             },
           ),
         ),
