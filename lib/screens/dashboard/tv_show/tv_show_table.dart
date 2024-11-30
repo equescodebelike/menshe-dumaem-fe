@@ -31,13 +31,12 @@ class TvShowDataSource extends DataTableSource {
     return DataRow(
       cells: [
         DataCell(Text(tvShow.name ?? 'N/A')),
-        DataCell(Text(tvShow.mainCategory ?? 'N/A')), 
-        DataCell(Text(
-            tvShow.viewCount?.toString() ?? 'N/A')),
+        DataCell(Text(tvShow.mainCategory ?? 'N/A')),
+        DataCell(Text(tvShow.viewCount?.toString() ?? 'N/A')),
         DataCell(Text(
             '${tvShow.startTime?.toLocal().toString().substring(0, 19) ?? 'N/A'}')),
         DataCell(Text(
-            '${tvShow.finishTime?.toLocal().toString().substring(0, 19) ?? 'N/A'}')), 
+            '${tvShow.finishTime?.toLocal().toString().substring(0, 19) ?? 'N/A'}')),
       ],
     );
   }
@@ -277,7 +276,7 @@ class _TvShowTableState extends State<TvShowTable> {
         return PaginatedDataTable(
           actions: [
             OutlinedButton(
-              onPressed: _showFilterDialog, 
+              onPressed: _showFilterDialog,
               child: const Text('Фильтры'),
             ),
             OutlinedButton(
@@ -294,11 +293,8 @@ class _TvShowTableState extends State<TvShowTable> {
           header: MediaQuery.of(context).size.width < 1100
               ? Row(
                   children: [
-                    SvgPicture.asset(
-                      'assets/images/logout.svg',
-                    ),
                     const SizedBox(
-                      width: 19,
+                      width: 5,
                     ),
                     GestureDetector(
                       onTap: context.read<MenuAppController>().controlMenu,
@@ -308,16 +304,7 @@ class _TvShowTableState extends State<TvShowTable> {
                     ),
                   ],
                 )
-              : Row(
-                  children: [
-                    SvgPicture.asset(
-                      'assets/images/logout.svg',
-                    ),
-                    const SizedBox(
-                      width: 19,
-                    ),
-                  ],
-                ),
+              : SizedBox.shrink(),
           rowsPerPage: 8,
           columns: const [
             DataColumn(label: Text('Название')),

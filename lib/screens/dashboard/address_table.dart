@@ -5,6 +5,7 @@ import 'package:admin/data/models/address_dto.dart';
 import 'package:admin/data/models/client_dto.dart';
 import 'package:admin/data/models/client_list_dto.dart';
 import 'package:admin/di/app_components.dart';
+import 'package:admin/screens/dashboard/auth_page.dart';
 import 'package:admin/screens/dashboard/controllers/menu_app_controller.dart';
 import 'package:decimal/decimal.dart';
 import 'package:dio/dio.dart';
@@ -236,8 +237,18 @@ class DataTableExample extends StatelessWidget {
               header: MediaQuery.of(context).size.width < 1100
                   ? Row(
                       children: [
-                        SvgPicture.asset(
-                          'assets/images/logout.svg',
+                        GestureDetector(
+                          onTap: () async {
+                            final prefs = AppComponents().sharedPreferences;
+                            await prefs.remove('logIn');
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) => AuthScreen()),
+                            );
+                          },
+                          child: SvgPicture.asset(
+                            'assets/images/logout.svg',
+                          ),
                         ),
                         SizedBox(
                           width: 19,
@@ -252,8 +263,18 @@ class DataTableExample extends StatelessWidget {
                     )
                   : Row(
                       children: [
-                        SvgPicture.asset(
-                          'assets/images/logout.svg',
+                        GestureDetector(
+                          onTap: () async {
+                            final prefs = AppComponents().sharedPreferences;
+                            await prefs.remove('logIn');
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) => AuthScreen()),
+                            );
+                          },
+                          child: SvgPicture.asset(
+                            'assets/images/logout.svg',
+                          ),
                         ),
                         SizedBox(
                           width: 19,
@@ -288,8 +309,18 @@ class DataTableExample extends StatelessWidget {
               header: MediaQuery.of(context).size.width < 1100
                   ? Row(
                       children: [
-                        SvgPicture.asset(
-                          'assets/images/logout.svg',
+                        GestureDetector(
+                          onTap: () async {
+                            final prefs = AppComponents().sharedPreferences;
+                            await prefs.remove('logIn');
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) => AuthScreen()),
+                            );
+                          },
+                          child: SvgPicture.asset(
+                            'assets/images/logout.svg',
+                          ),
                         ),
                         SizedBox(
                           width: 19,
@@ -304,8 +335,18 @@ class DataTableExample extends StatelessWidget {
                     )
                   : Row(
                       children: [
-                        SvgPicture.asset(
-                          'assets/images/logout.svg',
+                        GestureDetector(
+                          onTap: () async {
+                            final prefs = AppComponents().sharedPreferences;
+                            await prefs.remove('logIn');
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) => AuthScreen()),
+                            );
+                          },
+                          child: SvgPicture.asset(
+                            'assets/images/logout.svg',
+                          ),
                         ),
                         SizedBox(
                           width: 19,
@@ -339,8 +380,18 @@ class DataTableExample extends StatelessWidget {
               header: MediaQuery.of(context).size.width < 1100
                   ? Row(
                       children: [
-                        SvgPicture.asset(
-                          'assets/images/logout.svg',
+                        GestureDetector(
+                          onTap: () async {
+                            final prefs = AppComponents().sharedPreferences;
+                            await prefs.remove('logIn');
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) => AuthScreen()),
+                            );
+                          },
+                          child: SvgPicture.asset(
+                            'assets/images/logout.svg',
+                          ),
                         ),
                         SizedBox(
                           width: 19,
@@ -355,8 +406,18 @@ class DataTableExample extends StatelessWidget {
                     )
                   : Row(
                       children: [
-                        SvgPicture.asset(
-                          'assets/images/logout.svg',
+                        GestureDetector(
+                          onTap: () async {
+                            final prefs = AppComponents().sharedPreferences;
+                            await prefs.remove('logIn');
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) => AuthScreen()),
+                            );
+                          },
+                          child: SvgPicture.asset(
+                            'assets/images/logout.svg',
+                          ),
                         ),
                         SizedBox(
                           width: 19,
