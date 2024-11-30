@@ -127,4 +127,12 @@ class TableRepository {
       throw Exception(error.response?.data['message']);
     }
   }
+
+  Future<void> sendTvShowsEmail(StartToFinishDto request) async {
+    try {
+      final result = await service.sendTvShowsEmail(request: request);
+    } on DioException catch (error) {
+      throw Exception(error.response?.data['message']);
+    }
+  }
 }

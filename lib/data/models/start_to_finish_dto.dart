@@ -17,7 +17,9 @@ class StartToFinishDto with _$StartToFinishDto {
     String? finishTime,
     String? sort_by, 
     int? ageMin,    
-    int? ageMax,    
+    int? ageMax,
+    String? email,
+
   }) = _StartToFinishDto;
 
   factory StartToFinishDto.fromJson(Map<String, dynamic> json) =>

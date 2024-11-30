@@ -14,6 +14,7 @@ _$StartToFinishDtoImpl _$$StartToFinishDtoImplFromJson(
       sort_by: json['sort_by'] as String?,
       ageMin: (json['age_min'] as num?)?.toInt(),
       ageMax: (json['age_max'] as num?)?.toInt(),
+      email: json['email'] as String?,
     );
 
 Map<String, dynamic> _$$StartToFinishDtoImplToJson(
@@ -31,5 +32,6 @@ Map<String, dynamic> _$$StartToFinishDtoImplToJson(
   writeNotNull('sort_by', instance.sort_by);
   writeNotNull('age_min', instance.ageMin);
   writeNotNull('age_max', instance.ageMax);
+  writeNotNull('email', instance.email);
   return val;
 }
