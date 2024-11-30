@@ -1,7 +1,10 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:admin/data/models/auth_part1_dto.dart';
+import 'package:admin/data/models/auth_part2_dto.dart';
 import 'package:admin/data/models/client_analytics_dto.dart';
+import 'package:admin/data/models/client_dto.dart';
 import 'package:admin/data/models/client_list_dto.dart';
 import 'package:admin/data/models/link_dto.dart';
 import 'package:admin/data/models/tv_shows_dto.dart';
@@ -83,6 +86,31 @@ class TableRepository {
     try {
       final result = await service.getAnalyticsForClient(clientId);
       return result;
+    } on DioException catch (error) {
+      throw Exception(error.response?.data['message']);
+    }
+  }
+
+  Future<ClientDto> getClient(int clientId) async {
+    try {
+      final result = await service.getClientMap(clientId);
+      return result;
+    } on DioException catch (error) {
+      throw Exception(error.response?.data['message']);
+    }
+  }
+
+  Future<void> authPart1(AuthPart1Dto dto) async {
+    try {
+      final result = await service.authPart1(request: dto);
+    } on DioException catch (error) {
+      throw Exception(error.response?.data['message']);
+    }
+  }
+
+  Future<void> authPart2(AuthPart2Dto dto) async {
+    try {
+      final result = await service.authPart2(request: dto);
     } on DioException catch (error) {
       throw Exception(error.response?.data['message']);
     }

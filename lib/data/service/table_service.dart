@@ -1,6 +1,9 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:admin/data/models/auth_part1_dto.dart';
+import 'package:admin/data/models/auth_part2_dto.dart';
 import 'package:admin/data/models/client_analytics_dto.dart';
+import 'package:admin/data/models/client_dto.dart';
 import 'package:admin/data/models/client_list_dto.dart';
 import 'package:admin/data/models/link_dto.dart';
 import 'package:admin/data/models/tv_shows_dto.dart';
@@ -48,4 +51,19 @@ abstract class TableService {
   Future<ClientAnalyticsDto> getAnalyticsForClient(
     @Query('client_id') int clientId,
   );
+
+  @GET('/data/client/')
+  Future<ClientDto> getClientMap(
+    @Query('client_id') int clientId,
+  );
+
+  @POST('/auth/part1')
+  Future<void> authPart1({
+    @Body() required AuthPart1Dto request,
+  });
+
+  @POST('/auth/part2')
+  Future<void> authPart2({
+    @Body() required AuthPart2Dto request,
+  });
 }
