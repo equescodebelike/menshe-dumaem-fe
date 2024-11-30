@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:admin/data/models/client_dto.dart';
 import 'package:admin/data/models/client_list_dto.dart';
 import 'package:admin/data/repository/table_repository.dart';
 import 'package:admin/di/app_components.dart';
@@ -76,34 +77,133 @@ class _MainState extends State<Main> with OSMMixinObserver {
           final lon = address.lon!.toDouble();
           final point = GeoPoint(latitude: lat, longitude: lon);
 
-          if (client.color == null) {
-            await controller.addMarker(
-              point,
-              markerIcon: MarkerIcon(
-                iconWidget: SvgPicture.asset(
-                  'assets/icons/mark.svg',
-                ),
-              ),
-              angle: 0,
-              iconAnchor: IconAnchor(anchor: Anchor.top),
-            );
-          } else {
-            final color = hexToColor(client.color!);
+          final markerWidget = SvgPicture.asset(
+            'assets/icons/mark.svg',
+            colorFilter: client.color != null
+                ? ColorFilter.mode(hexToColor(client.color!), BlendMode.srcIn)
+                : null,
+          );
 
-            await controller.addMarker(
-              point,
-              markerIcon: MarkerIcon(
-                iconWidget: SvgPicture.asset(
-                  'assets/icons/mark.svg',
-                  colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
-                ),
-              ),
-              angle: 0,
-              iconAnchor: IconAnchor(anchor: Anchor.top),
-            );
-          }
+          await controller.addMarker(
+            point,
+            markerIcon: MarkerIcon(iconWidget: markerWidget),
+            angle: 0,
+            iconAnchor: IconAnchor(anchor: Anchor.top),
+          );
         }
       }
+    }
+  }
+
+  Future<void> _showClientInfoDialog(int clientId) async {
+    try {
+      final repository = AppComponents().tableRepository;
+      final client = await repository.getClient(clientId);
+
+      // Показываем диалог с информацией
+      showDialog(
+        context: context,
+        builder: (context) {
+          return PointerInterceptor(
+            child: AlertDialog(
+              title: Text('Информация о пользователе'),
+              content: _buildClientInfo(client),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: const Text('Закрыть'),
+                ),
+              ],
+            ),
+          );
+        },
+      );
+    } catch (e) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Ошибка'),
+            content: Text('Не удалось загрузить информацию: $e'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('Закрыть'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
+
+  Widget _buildClientInfo(ClientDto client) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('ID: ${client.id}'),
+        if (client.externalId != null) Text('Внешний ID: ${client.externalId}'),
+        if (client.gender != null)
+          Text('Пол: ${client.gender! ? 'Мужской' : 'Женский'}'),
+        if (client.ageMin != null && client.ageMax != null)
+          Text('Возраст: ${client.ageMin} - ${client.ageMax} лет'),
+        if (client.address != null)
+          Text('Адрес: ${client.address!.address ?? 'Не указан'}'),
+      ],
+    );
+  }
+
+  Future<void> handleGeoPointClick(GeoPoint geoPoint) async {
+    try {
+      final repository = AppComponents().tableRepository;
+      final list = await repository.getTable();
+
+      // Поиск клиента по координатам
+      final client = list.clients?.firstWhere(
+        (client) =>
+            client.address?.lat?.toDouble() == geoPoint.latitude &&
+            client.address?.lon?.toDouble() == geoPoint.longitude,
+      );
+
+      if (client == null) {
+        // Если клиент не найден
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text('Ошибка'),
+              content: const Text('Клиент для этой точки не найден.'),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: const Text('Закрыть'),
+                ),
+              ],
+            );
+          },
+        );
+        return;
+      }
+
+      await _showClientInfoDialog(client.id!);
+    } catch (e) {
+      // Обработка ошибок
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Ошибка'),
+            content: Text('Не удалось обработать нажатие: $e'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('Закрыть'),
+              ),
+            ],
+          );
+        },
+      );
     }
   }
 
@@ -113,51 +213,6 @@ class _MainState extends State<Main> with OSMMixinObserver {
       showFab.value = true;
     }
   }
-
-  // @override
-  // void onSingleTap(GeoPoint position) {
-  //   super.onSingleTap(position);
-  //   Future.microtask(() async {
-  //     if (lastGeoPoint.value != null) {
-  //       // await controller.changeLocationMarker(
-  //       //   oldLocation: lastGeoPoint.value!,
-  //       //   newLocation: position,
-  //       //   //iconAnchor: IconAnchor(anchor: Anchor.top),
-  //       // );
-  //       //controller.removeMarker(lastGeoPoint.value!);
-  //       await controller.addMarker(
-  //         position,
-  //         markerIcon: const MarkerIcon(
-  //           icon: Icon(
-  //             Icons.person_pin,
-  //             color: Colors.red,
-  //             size: 32,
-  //           ),
-  //         ),
-  //         //angle: userLocation.angle,
-  //       );
-  //     } else {
-  //       await controller.addMarker(
-  //         position,
-  //         markerIcon: const MarkerIcon(
-  //           icon: Icon(
-  //             Icons.person_pin,
-  //             color: Colors.red,
-  //             size: 32,
-  //           ),
-  //         ),
-  //         // iconAnchor: IconAnchor(
-  //         //   anchor: Anchor.left,
-  //         //   //offset: (x: 32.5, y: -32),
-  //         // ),
-  //         //angle: -pi / 4,
-  //       );
-  //     }
-  //     //await controller.moveTo(position, animate: true);
-  //     lastGeoPoint.value = position;
-  //     geos.add(position);
-  //   });
-  // }
 
   @override
   void onRegionChanged(Region region) {
@@ -211,6 +266,9 @@ class _MainState extends State<Main> with OSMMixinObserver {
     return Stack(
       children: [
         Map(
+          onGeoPointClicked: (p0) {
+            handleGeoPointClick(p0);
+          },
           controller: controller,
         ),
         if (!kReleaseMode || kIsWeb) ...[
@@ -259,16 +317,6 @@ class _MainState extends State<Main> with OSMMixinObserver {
                       userLocationIcon: userLocationIcon,
                     ),
                   ),
-                  
-                 
-                  // Positioned(
-                  //   top: kIsWeb ? 26 : topPadding,
-                  //   left: 64,
-                  //   right: 72,
-                  //   child: SearchInMap(
-                  //     controller: controller,
-                  //   ),
-                  // ),
                 ],
               );
             },
@@ -439,18 +487,19 @@ class Map extends StatelessWidget {
   const Map({
     super.key,
     required this.controller,
+    required this.onGeoPointClicked, // Добавляем параметр
   });
+
   final MapController controller;
+  final Function(GeoPoint) onGeoPointClicked; // Колбэк для обработки клика
+
   @override
   Widget build(BuildContext context) {
     return OSMFlutter(
-      controller: controller,
-      // mapIsLoading: Center(
-      //   child: CircularProgressIndicator(),
-      // ),
-      onLocationChanged: (location) {
-        debugPrint(location.toString());
+      onGeoPointClicked: (geoPoint) async {
+        await onGeoPointClicked(geoPoint); // Вызываем переданную функцию
       },
+      controller: controller,
       osmOption: OSMOption(
         enableRotationByGesture: true,
         zoomOption: const ZoomOption(
@@ -460,57 +509,23 @@ class Map extends StatelessWidget {
           stepZoom: 1.0,
         ),
         userLocationMarker: UserLocationMaker(
-            personMarker: MarkerIcon(
-              // icon: Icon(
-              //   Icons.car_crash_sharp,
-              //   color: Colors.red,
-              //   size: 48,
-              // ),
-              // iconWidget: SizedBox.square(
-              //   dimension: 56,
-              //   child: Image.asset(
-              //     "asset/taxi.png",
-              //     scale: .3,
-              //   ),
-              // ),
-              iconWidget: SizedBox(
-                width: 32,
-                height: 64,
-                child: Image.asset(
-                  "asset/directionIcon.png",
-                  scale: .3,
-                ),
+          personMarker: MarkerIcon(
+            iconWidget: SizedBox(
+              width: 32,
+              height: 64,
+              child: Image.asset(
+                "asset/directionIcon.png",
+                scale: .3,
               ),
-              // assetMarker: AssetMarker(
-              //   image: AssetImage(
-              //     "asset/taxi.png",
-              //   ),
-              //   scaleAssetImage: 0.3,
-              // ),
             ),
-            directionArrowMarker: const MarkerIcon(
-              icon: Icon(
-                Icons.navigation_rounded,
-                size: 48,
-              ),
-              // iconWidget: SizedBox(
-              //   width: 32,
-              //   height: 64,
-              //   child: Image.asset(
-              //     "asset/directionIcon.png",
-              //     scale: .3,
-              //   ),
-              // ),
-            )
-            // directionArrowMarker: MarkerIcon(
-            //   assetMarker: AssetMarker(
-            //     image: AssetImage(
-            //       "asset/taxi.png",
-            //     ),
-            //     scaleAssetImage: 0.25,
-            //   ),
-            // ),
+          ),
+          directionArrowMarker: const MarkerIcon(
+            icon: Icon(
+              Icons.navigation_rounded,
+              size: 48,
             ),
+          ),
+        ),
         staticPoints: [
           StaticPositionGeoPoint(
             "line 1",
@@ -537,7 +552,6 @@ class Map extends StatelessWidget {
           roadColor: Colors.blueAccent,
         ),
         showContributorBadgeForOSM: true,
-        //trackMyPosition: trackingNotifier.value,
         showDefaultInfoWindow: false,
       ),
     );
@@ -580,13 +594,6 @@ class ActivationUserLocation extends StatelessWidget {
           key: UniqueKey(),
           onPressed: () async {
             if (!trackingNotifier.value) {
-              /*await controller.currentLocation();
-              await controller.enableTracking(
-                enableStopFollow: true,
-                disableUserMarkerRotation: false,
-                anchor: Anchor.right,
-                useDirectionMarker: true,
-              );*/
               await controller.startLocationUpdating();
               trackingNotifier.value = true;
 
@@ -595,16 +602,6 @@ class ActivationUserLocation extends StatelessWidget {
               if (userLocation.value != null) {
                 await controller.moveTo(userLocation.value!);
               }
-
-              /*await controller.enableTracking(
-                  enableStopFollow: false,
-                  disableUserMarkerRotation: true,
-                  anchor: Anchor.center,
-                  useDirectionMarker: true);*/
-              // if (userLocationNotifier.value != null) {
-              //   await controller
-              //       .goToLocation(userLocationNotifier.value!);
-              // }
             }
           },
           mini: true,
