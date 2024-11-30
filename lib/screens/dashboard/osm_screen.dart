@@ -145,6 +145,8 @@ class _MainState extends State<Main> with OSMMixinObserver {
           Text('Пол: ${client.gender! ? 'Мужской' : 'Женский'}'),
         if (client.ageMin != null && client.ageMax != null)
           Text('Возраст: ${client.ageMin} - ${client.ageMax} лет'),
+        if (client.preferredCategory != null) 
+          Text('Любимая категория: ${client.preferredCategory}'),
         if (client.address != null)
           Text('Адрес: ${client.address!.address ?? 'Не указан'}'),
       ],

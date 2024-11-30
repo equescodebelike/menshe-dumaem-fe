@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:admin/di/app_components.dart';
 import 'package:admin/data/models/auth_part1_dto.dart';
 import 'package:admin/data/models/auth_part2_dto.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({Key? key}) : super(key: key);
@@ -32,7 +33,7 @@ class _AuthScreenState extends State<AuthScreen> {
         _isCodeSent = true;
       });
     } catch (e) {
-      _showError('Ошибка отправки кода: $e');
+      _showError('Ошибка отправки кода: укажите существующую почту');
     } finally {
       setState(() {
         _isLoading = false;
@@ -41,6 +42,7 @@ class _AuthScreenState extends State<AuthScreen> {
   }
 
   Future<void> _authPart2() async {
+    final SharedPreferences sharedPref = AppComponents().sharedPreferences;
     setState(() {
       _isLoading = true;
     });
@@ -52,11 +54,12 @@ class _AuthScreenState extends State<AuthScreen> {
         code: _codeController.text.trim(),
       );
       await repository.authPart2(dto);
+      sharedPref.setBool('logIn', true);
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => MainScreen()),
       );
     } catch (e) {
-      _showError('Ошибка аутентификации: $e');
+      _showError('Ошибка аутентификации: неверный код');
     } finally {
       setState(() {
         _isLoading = false;

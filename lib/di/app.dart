@@ -1,3 +1,4 @@
+import 'package:admin/di/app_components.dart';
 import 'package:admin/res/app_theme.dart';
 import 'package:admin/screens/dashboard/auth_page.dart';
 import 'package:admin/screens/main/main_screen.dart';
@@ -11,9 +12,10 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final prefs = AppComponents().sharedPreferences;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: MainScreen(),
+      home: prefs.getBool('logIn') ?? false ? MainScreen() : AuthScreen(),
       title: "FreedomLens",
       theme: appTheme(),
       darkTheme: appTheme(),
