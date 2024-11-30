@@ -69,4 +69,15 @@ abstract class TableService {
   Future<void> authPart2({
     @Body() required AuthPart2Dto request,
   });
+
+  @POST('/analytics/most_viewed_tw_shows_email/')
+  Future<void> sendTvShowsEmail({
+    @Body() required StartToFinishDto request,
+  });
+
+  @GET('/recommend/recommend_email/')
+  Future<void> sendRecommendEmail({
+    @Query('client_id') required int clientId,
+    @Body() required StartToFinishDto request,
+  });
 }

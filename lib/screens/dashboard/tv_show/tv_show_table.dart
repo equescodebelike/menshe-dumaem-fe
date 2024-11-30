@@ -137,6 +137,7 @@ class TvShowTable extends StatefulWidget {
 class _TvShowTableState extends State<TvShowTable> {
   Future<TvShowsDto>? _tvShowsFuture;
   StartToFinishDto? _selectedTime;
+  final TextEditingController _emailController = TextEditingController();
 
   @override
   void initState() {
@@ -254,6 +255,66 @@ class _TvShowTableState extends State<TvShowTable> {
     );
   }
 
+  void _sendEmail() {
+    final repository = AppComponents().tableRepository;
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Отправить e-mail'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: _emailController,
+                decoration: const InputDecoration(labelText: 'E-mail адрес'),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Отмена'),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                try {
+                  await repository.sendTvShowsEmail(
+                    StartToFinishDto(
+                      startTime: _selectedTime?.startTime,
+                      finishTime: _selectedTime?.finishTime,
+                      sort_by: _selectedTime?.sort_by,
+                      ageMin: _selectedTime?.ageMin,
+                      ageMax: _selectedTime?.ageMax,
+                      email: _emailController.text.trim(),
+                    ),
+                  );
+                  Navigator.of(context).pop();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('E-mail успешно отправлен'),
+                      backgroundColor: Colors.green,
+                    ),
+                  );
+                } catch (e) {
+                  Navigator.of(context).pop();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Ошибка: $e'),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                }
+              },
+              child: const Text('Отправить'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<TvShowsDto>(
@@ -288,6 +349,10 @@ class _TvShowTableState extends State<TvShowTable> {
                 }
               },
               child: const Text('Скачать csv'),
+            ),
+            ElevatedButton(
+              onPressed: _sendEmail,
+              child: const Text('Отправить e-mail'),
             ),
           ],
           header: MediaQuery.of(context).size.width < 1100

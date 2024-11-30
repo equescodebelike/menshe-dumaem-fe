@@ -25,6 +25,7 @@ mixin _$StartToFinishDto {
   String? get sort_by => throw _privateConstructorUsedError;
   int? get ageMin => throw _privateConstructorUsedError;
   int? get ageMax => throw _privateConstructorUsedError;
+  String? get email => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -43,7 +44,8 @@ abstract class $StartToFinishDtoCopyWith<$Res> {
       String? finishTime,
       String? sort_by,
       int? ageMin,
-      int? ageMax});
+      int? ageMax,
+      String? email});
 }
 
 /// @nodoc
@@ -64,6 +66,7 @@ class _$StartToFinishDtoCopyWithImpl<$Res, $Val extends StartToFinishDto>
     Object? sort_by = freezed,
     Object? ageMin = freezed,
     Object? ageMax = freezed,
+    Object? email = freezed,
   }) {
     return _then(_value.copyWith(
       startTime: freezed == startTime
@@ -86,6 +89,10 @@ class _$StartToFinishDtoCopyWithImpl<$Res, $Val extends StartToFinishDto>
           ? _value.ageMax
           : ageMax // ignore: cast_nullable_to_non_nullable
               as int?,
+      email: freezed == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -103,7 +110,8 @@ abstract class _$$StartToFinishDtoImplCopyWith<$Res>
       String? finishTime,
       String? sort_by,
       int? ageMin,
-      int? ageMax});
+      int? ageMax,
+      String? email});
 }
 
 /// @nodoc
@@ -122,6 +130,7 @@ class __$$StartToFinishDtoImplCopyWithImpl<$Res>
     Object? sort_by = freezed,
     Object? ageMin = freezed,
     Object? ageMax = freezed,
+    Object? email = freezed,
   }) {
     return _then(_$StartToFinishDtoImpl(
       startTime: freezed == startTime
@@ -144,6 +153,10 @@ class __$$StartToFinishDtoImplCopyWithImpl<$Res>
           ? _value.ageMax
           : ageMax // ignore: cast_nullable_to_non_nullable
               as int?,
+      email: freezed == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -157,7 +170,8 @@ class _$StartToFinishDtoImpl implements _StartToFinishDto {
       this.finishTime,
       this.sort_by,
       this.ageMin,
-      this.ageMax});
+      this.ageMax,
+      this.email});
 
   factory _$StartToFinishDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$StartToFinishDtoImplFromJson(json);
@@ -172,10 +186,12 @@ class _$StartToFinishDtoImpl implements _StartToFinishDto {
   final int? ageMin;
   @override
   final int? ageMax;
+  @override
+  final String? email;
 
   @override
   String toString() {
-    return 'StartToFinishDto(startTime: $startTime, finishTime: $finishTime, sort_by: $sort_by, ageMin: $ageMin, ageMax: $ageMax)';
+    return 'StartToFinishDto(startTime: $startTime, finishTime: $finishTime, sort_by: $sort_by, ageMin: $ageMin, ageMax: $ageMax, email: $email)';
   }
 
   @override
@@ -189,13 +205,14 @@ class _$StartToFinishDtoImpl implements _StartToFinishDto {
                 other.finishTime == finishTime) &&
             (identical(other.sort_by, sort_by) || other.sort_by == sort_by) &&
             (identical(other.ageMin, ageMin) || other.ageMin == ageMin) &&
-            (identical(other.ageMax, ageMax) || other.ageMax == ageMax));
+            (identical(other.ageMax, ageMax) || other.ageMax == ageMax) &&
+            (identical(other.email, email) || other.email == email));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, startTime, finishTime, sort_by, ageMin, ageMax);
+  int get hashCode => Object.hash(
+      runtimeType, startTime, finishTime, sort_by, ageMin, ageMax, email);
 
   @JsonKey(ignore: true)
   @override
@@ -218,7 +235,8 @@ abstract class _StartToFinishDto implements StartToFinishDto {
       final String? finishTime,
       final String? sort_by,
       final int? ageMin,
-      final int? ageMax}) = _$StartToFinishDtoImpl;
+      final int? ageMax,
+      final String? email}) = _$StartToFinishDtoImpl;
 
   factory _StartToFinishDto.fromJson(Map<String, dynamic> json) =
       _$StartToFinishDtoImpl.fromJson;
@@ -233,6 +251,8 @@ abstract class _StartToFinishDto implements StartToFinishDto {
   int? get ageMin;
   @override
   int? get ageMax;
+  @override
+  String? get email;
   @override
   @JsonKey(ignore: true)
   _$$StartToFinishDtoImplCopyWith<_$StartToFinishDtoImpl> get copyWith =>
