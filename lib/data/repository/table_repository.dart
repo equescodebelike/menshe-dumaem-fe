@@ -7,6 +7,7 @@ import 'package:admin/data/models/client_analytics_dto.dart';
 import 'package:admin/data/models/client_dto.dart';
 import 'package:admin/data/models/client_list_dto.dart';
 import 'package:admin/data/models/link_dto.dart';
+import 'package:admin/data/models/start_to_finish_dto.dart';
 import 'package:admin/data/models/tv_shows_dto.dart';
 import 'package:admin/data/service/table_service.dart';
 import 'package:dio/dio.dart';
@@ -43,9 +44,9 @@ class TableRepository {
     }
   }
 
-  Future<TvShowsDto> getPopularShows() async {
+  Future<TvShowsDto> getPopularShows(StartToFinishDto? request) async {
     try {
-      final result = service.getPopularShows();
+      final result = service.getPopularShows(request: request);
       return result;
     } on DioException catch (error) {
       throw Exception(error.response?.data['message']);

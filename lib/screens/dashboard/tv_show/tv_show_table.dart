@@ -5,6 +5,7 @@ import 'package:admin/data/models/address_dto.dart';
 import 'package:admin/data/models/category_dto.dart';
 import 'package:admin/data/models/client_dto.dart';
 import 'package:admin/data/models/client_list_dto.dart';
+import 'package:admin/data/models/start_to_finish_dto.dart';
 import 'package:admin/data/models/tv_show_dto.dart';
 import 'package:admin/data/models/tv_shows_dto.dart';
 import 'package:admin/di/app_components.dart';
@@ -128,22 +129,145 @@ final TvShowsDto testTvShowsList = TvShowsDto(
   ],
 );
 
-class TvShowTable extends StatelessWidget {
+class TvShowTable extends StatefulWidget {
   const TvShowTable({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final repository = AppComponents().tableRepository;
+  State<TvShowTable> createState() => _TvShowTableState();
+}
 
-    return FutureBuilder(
-      future: repository.getPopularShows(),
+class _TvShowTableState extends State<TvShowTable> {
+  Future<TvShowsDto>? _tvShowsFuture;
+  StartToFinishDto? _selectedTime;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadShows();
+  }
+
+  void _loadShows() {
+    final repository = AppComponents().tableRepository;
+    _tvShowsFuture = repository.getPopularShows(_selectedTime);
+  }
+
+  void _showFilterDialog() {
+    final TextEditingController startTimeController = TextEditingController();
+    final TextEditingController finishTimeController = TextEditingController();
+    final TextEditingController ageMinController = TextEditingController();
+    final TextEditingController ageMaxController = TextEditingController();
+    String? selectedSortBy;
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Фильтры'),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  controller: startTimeController,
+                  decoration: const InputDecoration(
+                    labelText: 'Начальное время (HH:mm)',
+                  ),
+                  keyboardType: TextInputType.datetime,
+                ),
+                const SizedBox(height: 8),
+                TextField(
+                  controller: finishTimeController,
+                  decoration: const InputDecoration(
+                    labelText: 'Конечное время (HH:mm)',
+                  ),
+                  keyboardType: TextInputType.datetime,
+                ),
+                const SizedBox(height: 8),
+                DropdownButtonFormField<String>(
+                  value: selectedSortBy,
+                  decoration: const InputDecoration(
+                    labelText: 'Сортировать по',
+                  ),
+                  items: const [
+                    DropdownMenuItem(
+                      value: 'most_watched',
+                      child: Text('Самые просматриваемые'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'watch_time',
+                      child: Text('Общее время просмотра'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'start_time',
+                      child: Text('Начальное время'),
+                    ),
+                  ],
+                  onChanged: (value) {
+                    selectedSortBy = value;
+                  },
+                ),
+                const SizedBox(height: 8),
+                TextField(
+                  controller: ageMinController,
+                  decoration: const InputDecoration(
+                    labelText: 'Минимальный возраст',
+                  ),
+                  keyboardType: TextInputType.number,
+                ),
+                const SizedBox(height: 8),
+                TextField(
+                  controller: ageMaxController,
+                  decoration: const InputDecoration(
+                    labelText: 'Максимальный возраст',
+                  ),
+                  keyboardType: TextInputType.number,
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Отмена'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  _selectedTime = StartToFinishDto(
+                    startTime: startTimeController.text.isEmpty
+                        ? null
+                        : startTimeController.text,
+                    finishTime: finishTimeController.text.isEmpty
+                        ? null
+                        : startTimeController.text,
+                    sortBy: selectedSortBy ?? null,
+                    ageMin: int.tryParse(ageMinController.text),
+                    ageMax: int.tryParse(ageMaxController.text),
+                  );
+                  _loadShows(); // Перезагружаем данные с новыми фильтрами
+                });
+                Navigator.of(context).pop();
+              },
+              child: const Text('Применить'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<TvShowsDto>(
+      future: _tvShowsFuture,
       builder: (BuildContext context, AsyncSnapshot<TvShowsDto> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
         }
         if (snapshot.hasError) {
           return Center(
-              child: Text('Ошибка загрузки данных: ${snapshot.error}'));
+            child: Text('Ошибка загрузки данных: ${snapshot.error}'),
+          );
         }
         if (!snapshot.hasData || snapshot.data?.tvShows == null) {
           return const Center(child: Text('Нет данных для отображения.'));
@@ -154,9 +278,7 @@ class TvShowTable extends StatelessWidget {
         return PaginatedDataTable(
           actions: [
             OutlinedButton(
-              onPressed: () {
-                // Логика фильтров
-              },
+              onPressed: _showFilterDialog, // Открываем диалог фильтров
               child: const Text('Фильтры'),
             ),
             OutlinedButton(
@@ -169,13 +291,6 @@ class TvShowTable extends StatelessWidget {
               },
               child: const Text('Скачать csv'),
             ),
-            // const SizedBox(width: 5),
-            // OutlinedButton(
-            //   onPressed: () {
-            //     // Логика загрузки файла
-            //   },
-            //   child: const Text('Загрузить'),
-            // ),
           ],
           header: MediaQuery.of(context).size.width < 1100
               ? Row(
@@ -183,12 +298,12 @@ class TvShowTable extends StatelessWidget {
                     SvgPicture.asset(
                       'assets/images/logout.svg',
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 19,
                     ),
                     GestureDetector(
                       onTap: context.read<MenuAppController>().controlMenu,
-                      child: Icon(
+                      child: const Icon(
                         Icons.menu,
                       ),
                     ),
@@ -199,7 +314,7 @@ class TvShowTable extends StatelessWidget {
                     SvgPicture.asset(
                       'assets/images/logout.svg',
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 19,
                     ),
                   ],
