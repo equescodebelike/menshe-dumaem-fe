@@ -30,14 +30,14 @@ class TvShowDataSource extends DataTableSource {
 
     return DataRow(
       cells: [
-        DataCell(Text(tvShow.name ?? 'N/A')), // Название передачи
-        DataCell(Text(tvShow.mainCategory ?? 'N/A')), // Главная категория
+        DataCell(Text(tvShow.name ?? 'N/A')),
+        DataCell(Text(tvShow.mainCategory ?? 'N/A')), 
         DataCell(Text(
-            tvShow.viewCount?.toString() ?? 'N/A')), // Количество просмотров
+            tvShow.viewCount?.toString() ?? 'N/A')),
         DataCell(Text(
-            '${tvShow.startTime?.toLocal().toString().substring(0, 19) ?? 'N/A'}')), // Время начала
+            '${tvShow.startTime?.toLocal().toString().substring(0, 19) ?? 'N/A'}')),
         DataCell(Text(
-            '${tvShow.finishTime?.toLocal().toString().substring(0, 19) ?? 'N/A'}')), // Время окончания
+            '${tvShow.finishTime?.toLocal().toString().substring(0, 19) ?? 'N/A'}')), 
       ],
     );
   }
@@ -52,7 +52,6 @@ class TvShowDataSource extends DataTableSource {
   int get selectedRowCount => 0;
 }
 
-// Пример данных
 final TvShowsDto testTvShowsList = TvShowsDto(
   tvShows: [
     TvShowDto(
@@ -240,11 +239,11 @@ class _TvShowTableState extends State<TvShowTable> {
                     finishTime: finishTimeController.text.isEmpty
                         ? null
                         : startTimeController.text,
-                    sortBy: selectedSortBy ?? null,
+                    sort_by: selectedSortBy ?? null,
                     ageMin: int.tryParse(ageMinController.text),
                     ageMax: int.tryParse(ageMaxController.text),
                   );
-                  _loadShows(); // Перезагружаем данные с новыми фильтрами
+                  _loadShows();
                 });
                 Navigator.of(context).pop();
               },
@@ -278,7 +277,7 @@ class _TvShowTableState extends State<TvShowTable> {
         return PaginatedDataTable(
           actions: [
             OutlinedButton(
-              onPressed: _showFilterDialog, // Открываем диалог фильтров
+              onPressed: _showFilterDialog, 
               child: const Text('Фильтры'),
             ),
             OutlinedButton(

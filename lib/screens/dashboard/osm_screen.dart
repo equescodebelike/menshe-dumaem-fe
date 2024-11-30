@@ -18,9 +18,6 @@ class OsmPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: const Main(),
-      // drawer: PointerInterceptor(
-      //   child: const DrawerMain(),
-      // ),
     );
   }
 }
@@ -518,7 +515,6 @@ class Map extends StatelessWidget {
               height: 64,
               child: SvgPicture.asset(
                 "assets/icons/geo_set.svg",
-                
               ),
             ),
           ),

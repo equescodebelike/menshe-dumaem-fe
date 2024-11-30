@@ -22,7 +22,7 @@ StartToFinishDto _$StartToFinishDtoFromJson(Map<String, dynamic> json) {
 mixin _$StartToFinishDto {
   String? get startTime => throw _privateConstructorUsedError;
   String? get finishTime => throw _privateConstructorUsedError;
-  String? get sortBy => throw _privateConstructorUsedError;
+  String? get sort_by => throw _privateConstructorUsedError;
   int? get ageMin => throw _privateConstructorUsedError;
   int? get ageMax => throw _privateConstructorUsedError;
 
@@ -41,7 +41,7 @@ abstract class $StartToFinishDtoCopyWith<$Res> {
   $Res call(
       {String? startTime,
       String? finishTime,
-      String? sortBy,
+      String? sort_by,
       int? ageMin,
       int? ageMax});
 }
@@ -61,7 +61,7 @@ class _$StartToFinishDtoCopyWithImpl<$Res, $Val extends StartToFinishDto>
   $Res call({
     Object? startTime = freezed,
     Object? finishTime = freezed,
-    Object? sortBy = freezed,
+    Object? sort_by = freezed,
     Object? ageMin = freezed,
     Object? ageMax = freezed,
   }) {
@@ -74,9 +74,9 @@ class _$StartToFinishDtoCopyWithImpl<$Res, $Val extends StartToFinishDto>
           ? _value.finishTime
           : finishTime // ignore: cast_nullable_to_non_nullable
               as String?,
-      sortBy: freezed == sortBy
-          ? _value.sortBy
-          : sortBy // ignore: cast_nullable_to_non_nullable
+      sort_by: freezed == sort_by
+          ? _value.sort_by
+          : sort_by // ignore: cast_nullable_to_non_nullable
               as String?,
       ageMin: freezed == ageMin
           ? _value.ageMin
@@ -101,7 +101,7 @@ abstract class _$$StartToFinishDtoImplCopyWith<$Res>
   $Res call(
       {String? startTime,
       String? finishTime,
-      String? sortBy,
+      String? sort_by,
       int? ageMin,
       int? ageMax});
 }
@@ -119,7 +119,7 @@ class __$$StartToFinishDtoImplCopyWithImpl<$Res>
   $Res call({
     Object? startTime = freezed,
     Object? finishTime = freezed,
-    Object? sortBy = freezed,
+    Object? sort_by = freezed,
     Object? ageMin = freezed,
     Object? ageMax = freezed,
   }) {
@@ -132,9 +132,9 @@ class __$$StartToFinishDtoImplCopyWithImpl<$Res>
           ? _value.finishTime
           : finishTime // ignore: cast_nullable_to_non_nullable
               as String?,
-      sortBy: freezed == sortBy
-          ? _value.sortBy
-          : sortBy // ignore: cast_nullable_to_non_nullable
+      sort_by: freezed == sort_by
+          ? _value.sort_by
+          : sort_by // ignore: cast_nullable_to_non_nullable
               as String?,
       ageMin: freezed == ageMin
           ? _value.ageMin
@@ -153,7 +153,11 @@ class __$$StartToFinishDtoImplCopyWithImpl<$Res>
 @JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
 class _$StartToFinishDtoImpl implements _StartToFinishDto {
   const _$StartToFinishDtoImpl(
-      {this.startTime, this.finishTime, this.sortBy, this.ageMin, this.ageMax});
+      {this.startTime,
+      this.finishTime,
+      this.sort_by,
+      this.ageMin,
+      this.ageMax});
 
   factory _$StartToFinishDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$StartToFinishDtoImplFromJson(json);
@@ -163,7 +167,7 @@ class _$StartToFinishDtoImpl implements _StartToFinishDto {
   @override
   final String? finishTime;
   @override
-  final String? sortBy;
+  final String? sort_by;
   @override
   final int? ageMin;
   @override
@@ -171,7 +175,7 @@ class _$StartToFinishDtoImpl implements _StartToFinishDto {
 
   @override
   String toString() {
-    return 'StartToFinishDto(startTime: $startTime, finishTime: $finishTime, sortBy: $sortBy, ageMin: $ageMin, ageMax: $ageMax)';
+    return 'StartToFinishDto(startTime: $startTime, finishTime: $finishTime, sort_by: $sort_by, ageMin: $ageMin, ageMax: $ageMax)';
   }
 
   @override
@@ -183,7 +187,7 @@ class _$StartToFinishDtoImpl implements _StartToFinishDto {
                 other.startTime == startTime) &&
             (identical(other.finishTime, finishTime) ||
                 other.finishTime == finishTime) &&
-            (identical(other.sortBy, sortBy) || other.sortBy == sortBy) &&
+            (identical(other.sort_by, sort_by) || other.sort_by == sort_by) &&
             (identical(other.ageMin, ageMin) || other.ageMin == ageMin) &&
             (identical(other.ageMax, ageMax) || other.ageMax == ageMax));
   }
@@ -191,7 +195,7 @@ class _$StartToFinishDtoImpl implements _StartToFinishDto {
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, startTime, finishTime, sortBy, ageMin, ageMax);
+      Object.hash(runtimeType, startTime, finishTime, sort_by, ageMin, ageMax);
 
   @JsonKey(ignore: true)
   @override
@@ -212,7 +216,7 @@ abstract class _StartToFinishDto implements StartToFinishDto {
   const factory _StartToFinishDto(
       {final String? startTime,
       final String? finishTime,
-      final String? sortBy,
+      final String? sort_by,
       final int? ageMin,
       final int? ageMax}) = _$StartToFinishDtoImpl;
 
@@ -224,7 +228,7 @@ abstract class _StartToFinishDto implements StartToFinishDto {
   @override
   String? get finishTime;
   @override
-  String? get sortBy;
+  String? get sort_by;
   @override
   int? get ageMin;
   @override

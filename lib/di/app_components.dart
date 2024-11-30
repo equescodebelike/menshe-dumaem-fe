@@ -19,7 +19,6 @@ class AppComponents {
 
   final Dio dio = Dio();
 
-  //errorHandler
   late final SharedPreferences sharedPreferences;
 
   late final TableService _tableService = TableService(dio);
@@ -41,19 +40,8 @@ class AppComponents {
       ),
     );
 
-    // dio.interceptors.add(
-    //   NgrokInterceptor(),
-    // );
-
-    // await tokenRepository.initTokens();
     sharedPreferences = await SharedPreferences.getInstance();
 
-    // dio.interceptors.add(
-    //   JWTInterceptor(
-    //     repository: tokenRepository,
-    //     dio: dio,
-    //   ),
-    // );
   }
 
   Future<void> dispose() async {}

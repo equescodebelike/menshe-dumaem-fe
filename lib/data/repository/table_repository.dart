@@ -28,6 +28,16 @@ class TableRepository {
     }
   }
 
+  Future<ClientListDto> getTableCount({int maxCount = 15}) async {
+    try {
+      final result = await service.getTableAddress();
+      final clients = result.clients?.take(maxCount.clamp(1, 15)).toList();
+      return ClientListDto(clients: clients);
+    } on DioException catch (error) {
+      throw Exception(error.response?.data['message']);
+    }
+  }
+
   Future<void> updateAddresses(FormData data) async {
     try {
       await service.updateAddresses(data);
@@ -53,10 +63,11 @@ class TableRepository {
     }
   }
 
-  Future<TvShowsDto> fetchAndProcessPopularShows() async {
+  Future<TvShowsDto> fetchAndProcessPopularShows(int count) async {
     try {
       final popularShows = await service.getPopularShows();
-      final sortedShows = popularShows.tvShows?.take(10).toList();
+      final sortedShows =
+          popularShows.tvShows?.take(count.clamp(1, 15)).toList();
       return TvShowsDto(
         tvShows: sortedShows,
       );

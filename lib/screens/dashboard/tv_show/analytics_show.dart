@@ -77,12 +77,19 @@ class PopularShowsBarChart extends StatelessWidget {
   }
 }
 
-class PopularShowsScreen extends StatelessWidget {
+class PopularShowsScreen extends StatefulWidget {
   const PopularShowsScreen({Key? key}) : super(key: key);
 
   @override
+  State<PopularShowsScreen> createState() => _PopularShowsScreenState();
+}
+
+class _PopularShowsScreenState extends State<PopularShowsScreen> {
+  final repository = AppComponents().tableRepository;
+  int _selectedItemCount = 5; 
+
+  @override
   Widget build(BuildContext context) {
-    final repository = AppComponents().tableRepository;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -93,69 +100,107 @@ class PopularShowsScreen extends StatelessWidget {
                     padding: EdgeInsets.only(left: 10),
                     child: GestureDetector(
                       onTap: context.read<MenuAppController>().controlMenu,
-                      child: Icon(
-                        Icons.menu,
-                      ),
+                      child: Icon(Icons.menu),
                     ),
                   ),
                 ],
               )
             : SizedBox.shrink(),
       ),
-      body: FutureBuilder<TvShowsDto>(
-        future: repository.fetchAndProcessPopularShows(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(Icons.error, color: Colors.red, size: 50),
-                  const SizedBox(height: 10),
-                  Text(
-                    'Error: ${snapshot.error}',
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(fontSize: 16),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                MediaQuery.of(context).size.width < 1100 ? const Text(
+                  'Количество программ для\nотображения:',
+                  style: TextStyle(fontSize: 16),
+                ) :
+                const Text(
+                  'Количество программ для отображения:',
+                  style: TextStyle(fontSize: 16),
+                ),
+                DropdownButton<int>(
+                  value: _selectedItemCount,
+                  items: List.generate(
+                    15,
+                    (index) => DropdownMenuItem(
+                      value: index + 1,
+                      child: Text('${index + 1}'),
+                    ),
                   ),
-                ],
-              ),
-            );
-          } else if (snapshot.hasData) {
-            final data = snapshot.data!;
-            return SingleChildScrollView(
-              child: Column(
-                children: [
-                  const SizedBox(height: 20),
-                  const Text(
-                    'ID программ по просмотрам',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 10),
-                  SizedBox(
-                    height: 300,
-                    child: PopularShowsPieChart(shows: data),
-                  ),
-                  const SizedBox(height: 20),
-                  const Text(
-                    'ID программ по просмотрам',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 10),
-                  SizedBox(
-                    height: 300,
-                    child: PopularShowsBarChart(shows: data),
-                  ),
-                  const SizedBox(height: 20),
-                ],
-              ),
-            );
-          } else {
-            return const Center(child: Text('No data available'));
-          }
-        },
+                  onChanged: (value) {
+                    if (value != null) {
+                      setState(() {
+                        _selectedItemCount = value;
+                      });
+                    }
+                  },
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: FutureBuilder<TvShowsDto>(
+              future: repository.fetchAndProcessPopularShows(_selectedItemCount),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(Icons.error, color: Colors.red, size: 50),
+                        const SizedBox(height: 10),
+                        Text(
+                          'Error: ${snapshot.error}',
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                      ],
+                    ),
+                  );
+                } else if (snapshot.hasData) {
+                  final data = snapshot.data!;
+                  return SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 20),
+                        const Text(
+                          'ID программ по просмотрам',
+                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 10),
+                        SizedBox(
+                          height: 300,
+                          child: PopularShowsPieChart(shows: data),
+                        ),
+                        const SizedBox(height: 20),
+                        const Text(
+                          'ID программ по просмотрам',
+                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 10),
+                        SizedBox(
+                          height: 300,
+                          child: PopularShowsBarChart(shows: data),
+                        ),
+                        const SizedBox(height: 20),
+                      ],
+                    ),
+                  );
+                } else {
+                  return const Center(child: Text('No data available'));
+                }
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
 }
+
